@@ -20,6 +20,9 @@ namespace SLWizard.UserControl
     /// </summary>
     public partial class NewProjectGuide : Window
     {
+        public string recentDirectory { get; set; } = string.Empty;
+
+
         public delegate void SubmitProject(ArchiveProject project);
 
         /// <summary>
@@ -32,9 +35,15 @@ namespace SLWizard.UserControl
             InitializeComponent();
         }
 
+        public NewProjectGuide(string recentDir)
+        {
+            InitializeComponent();
+            recentDirectory = recentDir;
+        }
+
         private void Confirm_Click(object sender, RoutedEventArgs e)
         {
-            if(!string.IsNullOrEmpty(Title.Text))
+            if(string.IsNullOrEmpty(Title.Text))
             {
                 MessageBox.Show("标题不允许为空!");
                 return;

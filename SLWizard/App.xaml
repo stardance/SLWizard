@@ -5,5 +5,8 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <SolidColorBrush Color="Black" x:Key="BlackGround"/>
+        <SolidColorBrush Color="#9090A1" x:Key="InfoBarGround" />
+
+        
     </Application.Resources>
 </Application>

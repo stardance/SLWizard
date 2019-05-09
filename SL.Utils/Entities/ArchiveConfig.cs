@@ -10,8 +10,10 @@ namespace SL.Utils.Entities
     [XmlRoot(ElementName = "Saves")]
     public class ArchiveConfig
     {
+
         [XmlArray(ElementName = "Projects")]
         public List<ArchiveProject> Projects { get; set; }
+
 
         public ArchiveConfig()
         {
@@ -24,7 +26,8 @@ namespace SL.Utils.Entities
     [XmlType(TypeName = "ArchiveProject")]
     public class ArchiveProject
     {
-       
+        [XmlElement(ElementName = "IsSelected")]
+        public bool IsSelected { get; set; }
 
         [XmlElement(ElementName = "ProjectName")]
         public string ProjectName { get; set; }
@@ -49,6 +52,8 @@ namespace SL.Utils.Entities
     [XmlType(TypeName = "ArchiveItem")]
     public class ArchiveItem
     {
+        [XmlElement(ElementName = "IsSelected")]
+        public bool IsSelected { get; set; }
         [XmlElement(ElementName = "Serial")]
         public int Serial { get; set; }
         [XmlElement(ElementName = "CreateTime")]

@@ -6,16 +6,16 @@
         xmlns:local="clr-namespace:SLWizard"
         xmlns:vm="clr-namespace:SLWizard.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" 
-        Height="450" 
-        Width="800"
+        Title="SLWizard" 
+        Height="500" 
+        Width="600"
         WindowStartupLocation="CenterScreen">
     <Window.DataContext>
         <vm:MainWindowViewModel />
     </Window.DataContext>
-    <Grid>
+    <Grid Background="{StaticResource BlackGround}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="25"/>
+            <!--<RowDefinition Height="25"/>-->
             <RowDefinition Height="*"/>
             <RowDefinition Height="40"/>
             <RowDefinition Height="25"/>
@@ -25,30 +25,81 @@
             <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
         
-        <Grid Grid.Row="2"
+        <Grid Grid.Row="1"
               Grid.Column="0">
-            <Button Content="Add New Project"
+            <Button Content="新建新项目"
                     Command="{Binding AddNewProjectCommand}"
                     Margin="2"/>
         </Grid>
 
-        <StackPanel Grid.Row="2"
+        <Grid Grid.Row="0"
+              Grid.Column="0">
+            <ListBox ItemsSource="{Binding Entity.Projects}"
+                     Background="{StaticResource BlackGround}"
+                     SelectedItem="{Binding SelectedProject}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                            <CheckBox IsChecked="{Binding IsSelected}" 
+                                      Height="20" Width="20"  
+                                      VerticalAlignment="Center" 
+                                      Margin="10,5">
+                            </CheckBox>
+                            <TextBlock Text="{Binding ProjectName}" 
+                                       VerticalAlignment="Center" 
+                                       Margin="5" 
+                                       FontSize="16"
+                                       Width="180"
+                                       Foreground="White">
+                            </TextBlock>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
+
+        <Grid Grid.Row="0"
+              Grid.Column="1">
+            <ListView Background="{StaticResource BlackGround}"
+                      ItemsSource="{Binding SelectedProject.Items}"
+                      SelectedItem="{Binding SelectedItem}">
+                <ListView.View>
+                    <GridView>
+                        <GridView.Columns>
+                            <GridViewColumn Header="序号" 
+                                            DisplayMemberBinding="{Binding Serial}" 
+                                            Width="50"
+                                            />
+                            <GridViewColumn Header="创建日期" 
+                                            DisplayMemberBinding="{Binding CreateTime}" 
+                                            Width="120"/>
+                            <GridViewColumn Header="注释" 
+                                            DisplayMemberBinding="{Binding Note}" 
+                                            Width="220"/>
+                        </GridView.Columns>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Grid>
+
+        <StackPanel Grid.Row="1"
                     Grid.Column="1"
                     Orientation="Horizontal"
                     HorizontalAlignment="Right">
-            <Button Content="Save"
-                    Margin="20 2"
+            <Button Content="保存"
+                    Margin="5 2"
                     Width="100"
                     Command="{Binding SaveCommand}"/>
-            <Button Content="Load"
-                    Margin="20 2"
+            <Button Content="载入"
+                    Margin="5 2"
                     Width="100"
                     Command="{Binding LoadCommand}"/>
         </StackPanel>
 
-        <StackPanel Grid.Row="3" 
+        <StackPanel Grid.Row="2" 
                     Grid.Column="0"
-                    Grid.ColumnSpan="2">
+                    Grid.ColumnSpan="2"
+                    Background="{StaticResource InfoBarGround}">
             <TextBlock Text="{Binding SysMsg}" 
                        Margin="2 2 0 0"
                        Height="22"

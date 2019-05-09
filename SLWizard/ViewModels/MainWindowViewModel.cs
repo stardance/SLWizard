@@ -16,6 +16,7 @@ namespace SLWizard.ViewModels
     public class MainWindowViewModel:ViewModelBase,IListener<SysMessage>
     {
         public ArchiveConfig Entity { get; set; }
+
         readonly string configPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ArchiveConfig.xml");
 
         private string sysMsg;
@@ -25,6 +26,32 @@ namespace SLWizard.ViewModels
             get { return sysMsg; }
             set { sysMsg = value;RaisePropertyChanged(nameof(SysMsg)); }
         }
+
+        private ArchiveProject selectedProject;
+
+        public ArchiveProject SelectedProject
+        {
+            get { return selectedProject; }
+            set
+            {
+                selectedProject = value;
+                RaisePropertyChanged("SelectedProject");
+            }
+        }
+
+
+        private ArchiveItem selectedItem;
+
+        public ArchiveItem SelectedItem
+        {
+            get { return selectedItem; }
+            set
+            {
+                selectedItem = value;
+                RaisePropertyChanged("SelectedItem");
+            }
+        }
+
 
 
 
@@ -89,18 +116,23 @@ namespace SLWizard.ViewModels
             {
                 return saveCommand ?? (new RelayCommand(()=>
                 {
+                    if(SelectedProject == null)
+                    {
+                        EventAggregatorHost.Aggregator.SendMessage<SysMessage>(new SysMessage($"请先选择一个项目"));
+                        return;
+                    }
                     int serial = 0;
-                    if (!Entity.Projects[0].Items.Any())
+                    if (!SelectedProject.Items.Any())
                     {
                         serial = 1;
                     }
                     else
                     {
-                        serial = Entity.Projects[0].Items.Max(it => it.Serial) + 1;
+                        serial = SelectedProject.Items.Max(it => it.Serial) + 1;
                     }
-                    string bakPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"Archive", Entity.Projects[0].ProjectName, $"{serial}.bak");
-                    File.Copy(Entity.Projects[0].FilePath, bakPath);
-                    Entity.Projects[0].Items.Add(new ArchiveItem
+                    string bakPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"Archive", SelectedProject.ProjectName, $"{serial}.bak");
+                    File.Copy(SelectedProject.FilePath, bakPath);
+                    SelectedProject.Items.Add(new ArchiveItem
                     {
                         AbsolutePath = bakPath,
                         CreateTime = DateTime.Now.ToString("s"),
@@ -108,6 +140,7 @@ namespace SLWizard.ViewModels
                         Serial = serial
                     });
                     XmlHelper.Write<ArchiveConfig>(configPath, Entity);
+                    EventAggregatorHost.Aggregator.SendMessage<SysMessage>(new SysMessage($"对文件{SelectedProject.ProjectName}的保存已完成！"));
                 }));
             }
         }
@@ -120,7 +153,8 @@ namespace SLWizard.ViewModels
             {
                 return loadCommand ?? new RelayCommand(()=>
                 {
-                    File.Copy(Entity.Projects[0].Items[0].AbsolutePath,Entity.Projects[0].FilePath);
+                    File.Copy(SelectedItem.AbsolutePath, SelectedProject.FilePath,true);
+                    EventAggregatorHost.Aggregator.SendMessage<SysMessage>(new SysMessage($"文件{SelectedProject.ProjectName}已重新载入！"));
                 });
             }
         }
