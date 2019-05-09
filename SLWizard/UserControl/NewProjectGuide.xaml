@@ -1,0 +1,62 @@
+﻿<Window x:Class="SLWizard.UserControl.NewProjectGuide"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SLWizard.UserControl"
+        mc:Ignorable="d"
+        Title="新建项目向导" 
+        Height="180" 
+        Width="600"
+        WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style TargetType="Label">
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="Foreground" Value="White" />
+        </Style>
+    </Window.Resources>
+    <Grid Background="{StaticResource BlackGround}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0"
+                    Orientation="Horizontal">
+            <Label Content="标       题:"
+                   />
+            <TextBox Width="500"
+                     Height="38"
+                     Name="Title"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1"
+                    Orientation="Horizontal">
+            <Label Content="文件位置:"
+                   />
+            <TextBox Width="420"
+                     Height="38"
+                     Name="FilePosition"/>
+            <Button Width="76"
+                    Height="40"
+                    Margin="2"
+                    Content="..."
+                    FontSize="24"
+                    Name="SelectFileDialog"
+                    Click="SelectFileDialog_Click"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="2"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center">
+            <Button Width="76"
+                    Height="40"
+                    Margin="0 0 17 0"
+                    Content="确定"
+                    Name="Confirm"
+                    Click="Confirm_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

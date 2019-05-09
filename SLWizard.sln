@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2016
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SLWizard", "SLWizard\SLWizard.csproj", "{A5455ADB-09B4-4A31-A212-D3F4C57CD741}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SL.Utils", "SL.Utils\SL.Utils.csproj", "{57FBF745-3277-48A0-8B78-4F1AD397706B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A5455ADB-09B4-4A31-A212-D3F4C57CD741}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5455ADB-09B4-4A31-A212-D3F4C57CD741}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5455ADB-09B4-4A31-A212-D3F4C57CD741}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5455ADB-09B4-4A31-A212-D3F4C57CD741}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57FBF745-3277-48A0-8B78-4F1AD397706B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57FBF745-3277-48A0-8B78-4F1AD397706B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57FBF745-3277-48A0-8B78-4F1AD397706B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57FBF745-3277-48A0-8B78-4F1AD397706B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FA3AEB0C-A3E0-4469-A6C3-ED7EE2FBCFDE}
+	EndGlobalSection
+EndGlobal
