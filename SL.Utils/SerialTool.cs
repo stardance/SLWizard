@@ -13,11 +13,11 @@ namespace SL.Utils
             {
                 return $"000{index}";
             }
-            else if (index / 10 > 1 && index / 100 < 1)
+            else if (index / 10 >= 1 && index / 100 < 1)
             {
                 return $"00{index}";
             }
-            else if(index / 100 > 1 && index / 1000 < 1)
+            else if(index / 100 >= 1 && index / 1000 < 1)
             {
                 return $"0{index}";
             }

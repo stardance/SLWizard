@@ -43,6 +43,7 @@
     <Compile Include="Entities\ArchiveConfig.cs" />
     <Compile Include="EventAggregator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SaveConfigMessage.cs" />
     <Compile Include="SerialTool.cs" />
     <Compile Include="SysMessage.cs" />
     <Compile Include="XmlHelper.cs" />

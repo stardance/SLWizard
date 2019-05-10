@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace SLWizard.ViewModels
 {
-    public class MainWindowViewModel:ViewModelBase,IListener<SysMessage>
+    public class MainWindowViewModel:ViewModelBase,IListener<SysMessage>,IListener<SaveConfigMessage>
     {
         public ArchiveConfig Entity { get; set; }
 
@@ -86,6 +86,11 @@ namespace SLWizard.ViewModels
             });
         }
 
+        public void Handle(SaveConfigMessage message)
+        {
+            XmlHelper.Write<ArchiveConfig>(configPath, Entity);
+        }
+
         private RelayCommand  addNewProjectCommand;
 
         public RelayCommand AddNewProjectCommand
@@ -153,8 +158,11 @@ namespace SLWizard.ViewModels
             {
                 return loadCommand ?? new RelayCommand(()=>
                 {
-                    File.Copy(SelectedItem.AbsolutePath, SelectedProject.FilePath,true);
-                    EventAggregatorHost.Aggregator.SendMessage<SysMessage>(new SysMessage($"文件{SelectedProject.ProjectName}已重新载入！"));
+                    if (SelectedItem != null && SelectedProject != null)
+                    {
+                        File.Copy(SelectedItem.AbsolutePath, SelectedProject.FilePath, true);
+                        EventAggregatorHost.Aggregator.SendMessage<SysMessage>(new SysMessage($"文件{SelectedProject.ProjectName}已重新载入！")); 
+                    }
                 });
             }
         }

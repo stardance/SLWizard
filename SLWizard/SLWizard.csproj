@@ -68,6 +68,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Resources\BasicCVT.cs" />
+    <Compile Include="Resources\CubeButton.cs" />
     <Compile Include="UserControl\NewProjectGuide.xaml.cs">
       <DependentUpon>NewProjectGuide.xaml</DependentUpon>
     </Compile>

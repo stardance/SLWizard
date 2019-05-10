@@ -16,47 +16,52 @@
             <Setter Property="Foreground" Value="White" />
         </Style>
     </Window.Resources>
-    <Grid Background="{StaticResource BlackGround}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
+    <Border BorderThickness="1" BorderBrush="Gray">
+        <Grid Background="{StaticResource BlackGround}"
+          >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0"
+            <StackPanel Grid.Row="0"
                     Orientation="Horizontal">
-            <Label Content="标       题:"
+                <Label Content="标       题:"
                    />
-            <TextBox Width="500"
-                     Height="38"
-                     Name="Title"/>
-        </StackPanel>
+                <TextBox Width="500"
+                     Height="28"
+                     Name="Title"
+                     VerticalAlignment="Center"/>
+            </StackPanel>
 
-        <StackPanel Grid.Row="1"
+            <StackPanel Grid.Row="1"
                     Orientation="Horizontal">
-            <Label Content="文件位置:"
+                <Label Content="文件位置:"
                    />
-            <TextBox Width="420"
+                <TextBox Width="420"
                      Height="38"
-                     Name="FilePosition"/>
-            <Button Width="76"
-                    Height="40"
+                     Name="FilePosition"
+                     VerticalAlignment="Center"/>
+                <Button Width="76"
+                    Height="38"
                     Margin="2"
                     Content="..."
                     FontSize="24"
                     Name="SelectFileDialog"
                     Click="SelectFileDialog_Click"/>
-        </StackPanel>
+            </StackPanel>
 
-        <StackPanel Grid.Row="2"
+            <StackPanel Grid.Row="2"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center">
-            <Button Width="76"
-                    Height="40"
+                <Button Width="76"
+                    Height="38"
                     Margin="0 0 17 0"
                     Content="确定"
                     Name="Confirm"
                     Click="Confirm_Click"/>
-        </StackPanel>
-    </Grid>
+            </StackPanel>
+        </Grid>
+    </Border>
 </Window>

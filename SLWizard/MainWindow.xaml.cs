@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SL.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,11 @@ namespace SLWizard
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            EventAggregatorHost.Aggregator.SendMessage(new SaveConfigMessage());
         }
     }
 }
