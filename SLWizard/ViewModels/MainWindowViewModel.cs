@@ -2,6 +2,7 @@
 using GalaSoft.MvvmLight.Command;
 using SL.Utils;
 using SL.Utils.Entities;
+using SL.Utils.Message;
 using SLWizard.UserControl;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,8 @@ namespace SLWizard.ViewModels
 {
     public class MainWindowViewModel:ViewModelBase,IListener<SysMessage>,IListener<SaveConfigMessage>
     {
+        public KeyboardListener keyListener { get; set; }
+
         public ArchiveConfig Entity { get; set; }
 
         readonly string configPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ArchiveConfig.xml");
@@ -59,6 +62,7 @@ namespace SLWizard.ViewModels
         {
             LoadArchiveConfig();
             EventAggregatorHost.Aggregator.AddListener(this);
+            keyListener = new KeyboardListener();
         }
 
         private void LoadArchiveConfig()
@@ -165,6 +169,62 @@ namespace SLWizard.ViewModels
                     }
                 });
             }
+        }
+
+
+        private RelayCommand settingCommand;
+
+        public RelayCommand SettingCommand
+        {
+            get
+            {
+                if (settingCommand == null)
+                {
+                    settingCommand = new RelayCommand(() =>
+                    {
+                        Settings setting = new Settings();
+                        setting.ShowDialog();
+                    });
+                }
+                return settingCommand;
+            }
+
+        }
+
+        private RelayCommand<ArchiveProject> projectCheckedCommand;
+
+        public RelayCommand<ArchiveProject> ProjectCheckedCommand
+        {
+            get
+            {
+                if (projectCheckedCommand == null)
+                {
+                    projectCheckedCommand = new RelayCommand<ArchiveProject>((p) =>
+                    {
+                        Entity.Projects.Where(it => it.ProjectName != p.ProjectName).ToList().ForEach(it => it.IsSelected = false);
+                    });
+                }
+                return projectCheckedCommand;
+            }
+
+        }
+
+        private RelayCommand<ArchiveItem> itemCheckCommand;
+
+        public RelayCommand<ArchiveItem> ItemCheckedCommand
+        {
+            get
+            {
+                if (itemCheckCommand == null)
+                {
+                    itemCheckCommand = new RelayCommand<ArchiveItem>((p) =>
+                    {
+                        SelectedProject.Items.Where(it => it.Serial != p.Serial).ToList().ForEach(it => it.IsSelected = false);
+                    });
+                }
+                return itemCheckCommand;
+            }
+
         }
 
 

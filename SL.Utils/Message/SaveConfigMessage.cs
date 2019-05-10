@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace SL.Utils
+namespace SL.Utils.Message
 {
     /// <summary>
     /// 通知保存配置文件的消息

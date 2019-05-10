@@ -6,6 +6,8 @@
         xmlns:local="clr-namespace:SLWizard"
         xmlns:vm="clr-namespace:SLWizard.ViewModels"
         xmlns:res="clr-namespace:SLWizard.Resources"
+        xmlns:mvvm="http://www.galasoft.ch/mvvmlight"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         mc:Ignorable="d"
         Title="SLWizard" 
         Height="500" 
@@ -38,7 +40,11 @@
             <res:CubeButton Content="新建项目"
                     Command="{Binding AddNewProjectCommand}"
                     Margin="2"
-                    Style="{StaticResource CubeButton}"/>
+                    Style="{StaticResource CubeButton}">
+                <res:CubeButton.PathData>
+                    <PathGeometry Figures="M0,10.200009L15.700012,10.200009C15.599976,10.299985 15.5,10.299985 15.399963,10.399991 14,11.499997 14.200012,12.299985 16.099976,12.100003 17.899963,11.999997 19,13.299984 18.399963,14.999996 17.899963,16.700008 18.599976,17.200008 20,15.999996 21.399963,14.799984 23,15.299984 23.599976,16.999996 24.200012,18.700006 25,18.700006 25.5,16.89999 25.599976,16.299984 25.899963,15.799983 26.299988,15.499996L26.299988,22.1 0,22.1z M0,1.2999878L10.599976,1.2999878 10.599976,3.9999988 17.700012,3.9999988C17.299988,4.600005 16.599976,4.8999927 15.700012,4.8999927 13.899963,4.8999927 13.700012,5.7000106 15.200012,6.7000106 15.399963,6.7999862 15.599976,6.9999979 15.799988,7.2000101L0,7.2000101 0,4.4999988 0,3.9999988z M23.700012,0L25.200012,4.2000111 28.599976,1.2999878 27.299988,5.6000045 31.799988,5.2999866 28.200012,7.9999979 32,10.399991 27.5,10.499997 29.200012,14.700008 25.5,11.999997 24.399963,16.39999 23,12.200009 19.599976,15.100002 20.899963,10.799985 16.399963,11.100003 20,8.3999918 16.200012,5.9999984 20.700012,5.8999923 19,1.7000118 22.700012,4.2999866z" />
+                </res:CubeButton.PathData>
+            </res:CubeButton>
         </Grid>
 
         <Grid Grid.Row="0"
@@ -53,7 +59,13 @@
                             <CheckBox IsChecked="{Binding IsSelected}" 
                                       Height="20" Width="20"  
                                       VerticalAlignment="Center" 
-                                      Margin="10,5">
+                                      Margin="10,5"
+                                      >
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Checked">
+                                        <mvvm:EventToCommand Command="{Binding DataContext.ProjectCheckedCommand,RelativeSource={RelativeSource AncestorType=ListBox,Mode=FindAncestor}}" CommandParameter="{Binding }"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
                             </CheckBox>
                             <TextBlock Text="{Binding ProjectName}" 
                                        VerticalAlignment="Center" 
@@ -62,6 +74,29 @@
                                        Width="180"
                                        Foreground="White">
                             </TextBlock>
+                            <Button Width="20"
+                                    Height="20">
+                                <Button.Template>
+                                    <ControlTemplate>
+                                        <Path Data="M9.9000245,6.000003L6.0000001,9.8999988 12.100037,16.000007 6.0000001,22.100002 9.9000245,25.999997 16,19.900018 22.100037,25.999997 26,22.100002 19.900024,16.000007 26,9.8999988 22.100037,6.000003 16,12.099997z M16,0C24.799988,0 32,7.2000005 32,16.000007 32,24.800016 24.799988,32.000001 16,32.000001 7.2000123,32.000001 8.3946347E-08,24.800016 0,16.000007 8.3946347E-08,7.2000005 7.2000123,0 16,0z" Stretch="Uniform" 
+                                  Fill="#FFAB1111" 
+                                  Width="16" 
+                                  Height="16" 
+                                  Margin="0,0,0,0" 
+                                  RenderTransformOrigin="0.5,0.5">
+                                            <Path.RenderTransform>
+                                                <TransformGroup>
+                                                    <TransformGroup.Children>
+                                                        <RotateTransform Angle="0" />
+                                                        <ScaleTransform ScaleX="1" ScaleY="1" />
+                                                    </TransformGroup.Children>
+                                                </TransformGroup>
+                                            </Path.RenderTransform>
+                                        </Path>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+                            
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
@@ -76,8 +111,29 @@
                       CanUserAddRows="False"
                       ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                 <DataGrid.Columns>
-                    <DataGridCheckBoxColumn Width="20"
-                                            Binding="{Binding IsSelected}"/>
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox Width="20"
+                                          IsChecked="{Binding IsSelected}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Checked">
+                                            <mvvm:EventToCommand Command="{Binding DataContext.ItemCheckedCommand,RelativeSource={RelativeSource AncestorType=DataGrid,Mode=FindAncestor}}" CommandParameter="{Binding }"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </CheckBox>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <!--<DataGridCheckBoxColumn Width="20"
+                                            Binding="{Binding IsSelected}"
+                                            >
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Checked">
+                                <mvvm:EventToCommand Command="{Binding DataContext.ItemCheckedCommand,RelativeSource={RelativeSource AncestorType=DataGrid,Mode=FindAncestor}}" CommandParameter="{Binding }"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </DataGridCheckBoxColumn>-->
                     <DataGridTextColumn Binding="{Binding Serial,Converter={StaticResource SerCVT}}"
                                         Header="序号"
                                         Width="60"
@@ -105,11 +161,11 @@
                     Command="{Binding SettingCommand}"
                     >
                 <res:CubeButton.PathData>
-                    <PathGeometry Figures="M14,0L18,0 18,14 32,14 32,18 18,18 18,32 14,32 14,18 0,18 0,14 14,14z" />
+                    <PathGeometry Figures="M24.574808,0C25.477812,0,26.379816,0.20100307,27.282821,0.50100708L27.984824,0.80201149 23.471802,5.1150765C23.170801,5.416081,23.0708,5.8170867,23.371802,6.2180929L25.878814,8.7251303C26.078815,8.9261334 26.279816,9.026135 26.479816,9.0261347 26.580817,8.9261334 26.680818,8.9261334 26.780818,8.8261321L30.993838,4.6130691 31.494841,4.7140703C32.497846,7.3211093 31.995843,10.230153 30.090834,12.135181 28.485826,13.740206 26.179815,14.542217 23.872804,14.04121 23.671803,14.241213 14.144758,23.769356 13.943757,23.969358 14.445759,26.276393 13.642756,28.583427 12.038748,30.187452 10.132739,32.093481 7.8267279,32.394485 5.2187157,31.39147L4.8177137,31.190466C4.7177134,31.190466,4.6167126,31.090466,4.5167122,31.090466L8.6287317,27.078405C9.0297337,26.677399,9.0297337,25.975389,8.6287317,25.574383L6.3217211,23.067345C6.0207195,22.966344,5.6197176,23.267348,5.318716,23.568353L1.2066956,27.780416 0.50469208,27.479411C-0.49731255,24.872372 0.0036907196,21.963328 1.9097004,20.0583 3.5137072,18.453276 5.8207178,17.852267 8.126729,18.253273 8.2277298,18.152272 17.955776,8.3241243 18.155777,8.1231215 17.654775,5.8170867 18.256778,3.5100527 19.860785,1.9050283 21.164791,0.70201015 22.769799,0 24.574808,0z" />
                 </res:CubeButton.PathData>
             </res:CubeButton>
             <res:CubeButton Content="保存"
-                    Margin="5 2"
+                    Margin="5"
                     Width="100"
                     Style="{StaticResource CubeButton}"
                     Command="{Binding SaveCommand}">
@@ -118,7 +174,7 @@
                 </res:CubeButton.PathData>
             </res:CubeButton>
             <res:CubeButton Content="载入"
-                    Margin="5 2"
+                    Margin="5"
                     Width="100"
                     Style="{StaticResource CubeButton}"
                     Command="{Binding LoadCommand}">

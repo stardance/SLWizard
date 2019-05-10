@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GalaSoft.MvvmLight;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace SL.Utils.Entities
 {
     [Serializable]
     [XmlRoot(ElementName = "Saves")]
-    public class ArchiveConfig
+    public class ArchiveConfig:ObservableObject
     {
 
         [XmlArray(ElementName = "Projects")]
@@ -24,10 +25,20 @@ namespace SL.Utils.Entities
 
     [Serializable]
     [XmlType(TypeName = "ArchiveProject")]
-    public class ArchiveProject
+    public class ArchiveProject:ObservableObject
     {
+        [XmlIgnore]
+        private bool isSelected;
         [XmlElement(ElementName = "IsSelected")]
-        public bool IsSelected { get; set; }
+        public bool IsSelected
+        {
+            get { return isSelected; }
+            set
+            {
+                isSelected = value;
+                RaisePropertyChanged(nameof(IsSelected));
+            }
+        }
 
         [XmlElement(ElementName = "ProjectName")]
         public string ProjectName { get; set; }
@@ -50,10 +61,21 @@ namespace SL.Utils.Entities
 
     [Serializable]
     [XmlType(TypeName = "ArchiveItem")]
-    public class ArchiveItem
+    public class ArchiveItem:ObservableObject
     {
+        [XmlIgnore]
+        private bool isSelected;
         [XmlElement(ElementName = "IsSelected")]
-        public bool IsSelected { get; set; }
+        public bool IsSelected
+        {
+            get { return isSelected; }
+            set
+            {
+                isSelected = value;
+                RaisePropertyChanged(nameof(IsSelected));
+            }
+        }
+
         [XmlElement(ElementName = "Serial")]
         public int Serial { get; set; }
         [XmlElement(ElementName = "CreateTime")]

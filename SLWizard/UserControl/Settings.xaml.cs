@@ -1,6 +1,4 @@
-﻿using SL.Utils;
-using SL.Utils.Message;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,24 +9,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SLWizard
+namespace SLWizard.UserControl
 {
     /// <summary>
-    /// MainWindow.xaml 的交互逻辑
+    /// Settings.xaml 的交互逻辑
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class Settings : Window
     {
-        public MainWindow()
+        public Settings()
         {
             InitializeComponent();
-        }
-
-        private void Window_Closed(object sender, EventArgs e)
-        {
-            EventAggregatorHost.Aggregator.SendMessage(new SaveConfigMessage());
         }
     }
 }

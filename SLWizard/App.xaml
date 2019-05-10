@@ -126,24 +126,29 @@ Converter="{StaticResource bgCvt}"/>
                     <ControlTemplate>
                         <Border BorderBrush="White" 
                                 BorderThickness="2">
-                            <StackPanel Orientation="Horizontal"
-                                    VerticalAlignment="Center"
+                                <Grid 
                                     Background="Transparent"
-                                    HorizontalAlignment="Left"
                                     x:Name="PanelMain"
-                                    Opacity="0.7">
-                                <Path Width = "16"
+                                    Opacity="0.7"
+                                    VerticalAlignment="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="20" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Path Grid.Column="0"
+                                      Width = "16"
                                       Height = "16"
                                       Data="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=PathData}"  
                                       Stretch="Uniform" 
                                       Fill="White"
                                       Stroke="White"
                                       Margin="4 0 0 0"/>
-                                <TextBlock Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=Content}"
-                                       FontSize="16"
-                                       Foreground="White"
-                                       Margin="26 0 0 0"/>
-                            </StackPanel>
+                                <TextBlock Grid.Column="1"
+                                           Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=Content}"
+                                           FontSize="16"
+                                           Foreground="White"
+                                           HorizontalAlignment="Center"/>
+                            </Grid>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">

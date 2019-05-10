@@ -32,7 +32,9 @@
                 <TextBox Width="500"
                      Height="28"
                      Name="Title"
-                     VerticalAlignment="Center"/>
+                     VerticalAlignment="Center"
+                     FontSize="16"
+                     FontWeight="Bold"/>
             </StackPanel>
 
             <StackPanel Grid.Row="1"
@@ -40,14 +42,16 @@
                 <Label Content="文件位置:"
                    />
                 <TextBox Width="420"
-                     Height="38"
+                     Height="28"
+                     VerticalAlignment="Center"
+                     FontSize="16"
                      Name="FilePosition"
-                     VerticalAlignment="Center"/>
+                     />
                 <Button Width="76"
-                    Height="38"
+                    Height="28"
                     Margin="2"
-                    Content="..."
-                    FontSize="24"
+                    Content="浏览"
+                    FontSize="16"
                     Name="SelectFileDialog"
                     Click="SelectFileDialog_Click"/>
             </StackPanel>
@@ -56,10 +60,11 @@
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center">
                 <Button Width="76"
-                    Height="38"
-                    Margin="0 0 17 0"
+                    Height="28"
+                    Margin="0 0 14 0"
                     Content="确定"
                     Name="Confirm"
+                    FontSize="16"
                     Click="Confirm_Click"/>
             </StackPanel>
         </Grid>
