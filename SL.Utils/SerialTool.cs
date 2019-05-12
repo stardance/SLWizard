@@ -26,5 +26,10 @@ namespace SL.Utils
                 return index.ToString(); 
             }
         }
+
+        public static string NewID()
+        {
+            return Guid.NewGuid().ToString().Replace("-","");
+        }
     }
 }

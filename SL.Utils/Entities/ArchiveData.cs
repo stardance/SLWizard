@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
@@ -9,16 +10,31 @@ namespace SL.Utils.Entities
 {
     [Serializable]
     [XmlRoot(ElementName = "Saves")]
-    public class ArchiveConfig:ObservableObject
+    public class ArchiveData:ObservableObject
     {
 
         [XmlArray(ElementName = "Projects")]
         public List<ArchiveProject> Projects { get; set; }
+        [XmlIgnore]
+        private ObservableCollection<ArchiveProject> obList;
+        [XmlIgnore]
+        public ObservableCollection<ArchiveProject> ObList
+        {
+            get { return obList; }
+            set
+            {
+                obList = value;
+                RaisePropertyChanged("ObList");
+            }
+        }
 
 
-        public ArchiveConfig()
+
+
+        public ArchiveData()
         {
             Projects = new List<ArchiveProject>();
+            ObList = new ObservableCollection<ArchiveProject>();
         }
     }
 
@@ -52,9 +68,26 @@ namespace SL.Utils.Entities
         [XmlArray(ElementName = "Items")]
         public List<ArchiveItem> Items{ get;set;}
 
+        [XmlIgnore]
+        private ObservableCollection<ArchiveItem> obList;
+
+        [XmlIgnore]
+        public ObservableCollection<ArchiveItem> ObList
+        {
+            get { return obList; }
+            set
+            {
+                obList = value;
+                RaisePropertyChanged("ObList");
+            }
+        }
+
+
+
         public ArchiveProject()
         {
             Items = new List<ArchiveItem>();
+            ObList = new ObservableCollection<ArchiveItem>();
         }
     }
 
@@ -78,6 +111,10 @@ namespace SL.Utils.Entities
 
         [XmlElement(ElementName = "Serial")]
         public int Serial { get; set; }
+
+        [XmlElement(ElementName = "Guid")]
+        public string Guid { get; set; }
+
         [XmlElement(ElementName = "CreateTime")]
         public string CreateTime { get; set; }
         [XmlElement(ElementName = "AbsolutePath")]

@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace SLWizard.ViewModels
 {
@@ -18,9 +19,9 @@ namespace SLWizard.ViewModels
     {
         public KeyboardListener keyListener { get; set; }
 
-        public ArchiveConfig Entity { get; set; }
+        public ArchiveData Entity { get; set; }
 
-        readonly string configPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ArchiveConfig.xml");
+        readonly string configPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ArchiveData.xml");
 
         private string sysMsg;
 
@@ -69,12 +70,14 @@ namespace SLWizard.ViewModels
         {
             if (!File.Exists(configPath))
             {
-                Entity = new ArchiveConfig();
-                XmlHelper.Write<ArchiveConfig>(configPath,Entity);
+                Entity = new ArchiveData();
+                SaveData();
             }
             else
             {
-                Entity = XmlHelper.Read<ArchiveConfig>(configPath);
+                Entity = XmlHelper.Read<ArchiveData>(configPath);
+                Entity.Projects.ForEach(it => it.ObList = new System.Collections.ObjectModel.ObservableCollection<ArchiveItem>(it.Items));
+                Entity.ObList = new System.Collections.ObjectModel.ObservableCollection<ArchiveProject>(Entity.Projects);
             }
         }
 
@@ -92,7 +95,7 @@ namespace SLWizard.ViewModels
 
         public void Handle(SaveConfigMessage message)
         {
-            XmlHelper.Write<ArchiveConfig>(configPath, Entity);
+            SaveData();
         }
 
         private RelayCommand  addNewProjectCommand;
@@ -106,10 +109,10 @@ namespace SLWizard.ViewModels
                     NewProjectGuide guide = new NewProjectGuide();
                     guide.OnSubmitProject += (p) =>
                     {
-                        Entity.Projects.Add(p);
+                        Entity.ObList.Add(p);
                         string dir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"Archive", p.ProjectName);
                         if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
-                        XmlHelper.Write<ArchiveConfig>(configPath, Entity);
+                        SaveData();
                         EventAggregatorHost.Aggregator.SendMessage<SysMessage>(new SysMessage($" 新项目:‘{p.ProjectName}’创建完成"));
                     };
                     guide.ShowDialog();
@@ -139,16 +142,19 @@ namespace SLWizard.ViewModels
                     {
                         serial = SelectedProject.Items.Max(it => it.Serial) + 1;
                     }
-                    string bakPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"Archive", SelectedProject.ProjectName, $"{serial}.bak");
+                    string guid = SerialTool.NewID();
+                    string bakPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"Archive", SelectedProject.ProjectName, $"{guid}.bak");
                     File.Copy(SelectedProject.FilePath, bakPath);
-                    SelectedProject.Items.Add(new ArchiveItem
+                    SelectedProject.ObList.Add(new ArchiveItem
                     {
                         AbsolutePath = bakPath,
                         CreateTime = DateTime.Now.ToString("s"),
                         Note = string.Empty,
-                        Serial = serial
+                        Serial = serial,
+                        Guid = guid
                     });
-                    XmlHelper.Write<ArchiveConfig>(configPath, Entity);
+                    SaveData();
+                    RaisePropertyChanged("");
                     EventAggregatorHost.Aggregator.SendMessage<SysMessage>(new SysMessage($"对文件{SelectedProject.ProjectName}的保存已完成！"));
                 }));
             }
@@ -183,6 +189,7 @@ namespace SLWizard.ViewModels
                     settingCommand = new RelayCommand(() =>
                     {
                         Settings setting = new Settings();
+                        
                         setting.ShowDialog();
                     });
                 }
@@ -228,6 +235,62 @@ namespace SLWizard.ViewModels
         }
 
 
+        private RelayCommand<ArchiveItem> deleteItemCommand;
 
+        public RelayCommand<ArchiveItem> DeleteItemCommand
+        {
+            get
+            {
+                if (deleteItemCommand == null)
+                {
+                    deleteItemCommand = new RelayCommand<ArchiveItem>((p) =>
+                    {
+                        if (MessageBox.Show("确定删除此项?","警告",MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                        {
+                            File.Delete(SelectedItem.AbsolutePath);
+                            EventAggregatorHost.Aggregator.SendMessage<SysMessage>(new SysMessage($"{SelectedItem.Note}({SelectedItem.Serial})已删除。"));
+
+                            int deleteingSerial = SelectedItem.Serial;
+                            SelectedProject.Items.Remove(SelectedItem);
+                            SelectedProject.Items.Where(it => it.Serial > deleteingSerial).ToList().ForEach(it => it.Serial--);
+
+                        }
+
+                    });
+                }
+                return deleteItemCommand;
+            }
+
+        }
+
+        private RelayCommand deleteProjectCommand;
+
+        public RelayCommand DeleteProjectCommand
+        {
+            get
+            {
+                if (deleteProjectCommand == null)
+                {
+                    deleteProjectCommand = new RelayCommand(() =>
+                    {
+                        if (MessageBox.Show("确定删除此项目?", "警告", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                        {
+                            Directory.Delete(SelectedProject.FilePath,true);
+                            EventAggregatorHost.Aggregator.SendMessage<SysMessage>(new SysMessage($"项目{SelectedProject.ProjectName}已删除。"));
+                            Entity.Projects.Remove(SelectedProject);
+                        }
+                    });
+                }
+                return deleteProjectCommand;
+            }
+
+        }
+
+        private void SaveData()
+        {
+            Entity.Projects.ForEach(it => it.Items = it.ObList.ToList());
+            Entity.Projects = Entity.ObList?.ToList();
+            XmlHelper.Write<ArchiveData>(configPath, Entity);
+        }
     }
 }

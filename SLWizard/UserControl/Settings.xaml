@@ -5,7 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SLWizard.UserControl"
         mc:Ignorable="d"
-        Title="Settings" Height="300" Width="300">
+        Title="Settings" 
+        Height="300" 
+        Width="300"
+        WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -15,7 +18,10 @@
         <Border Grid.Row="0">
             <TabControl>
                 <TabItem Header="按键">
-
+                    <StackPanel VerticalAlignment="Center"
+                                HorizontalAlignment="Center">
+                        <TextBlock Text="待开发" />
+                    </StackPanel>
                 </TabItem>
                 <TabItem Header="关于">
 

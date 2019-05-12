@@ -47,7 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\ArchiveConfig.cs" />
+    <Compile Include="Entities\ArchiveData.cs" />
     <Compile Include="EventAggregator.cs" />
     <Compile Include="KeyboardHook.cs" />
     <Compile Include="KeyboardListener.cs" />

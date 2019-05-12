@@ -11,7 +11,7 @@
         mc:Ignorable="d"
         Title="SLWizard" 
         Height="500" 
-        Width="600"
+        Width="700"
         WindowStartupLocation="CenterScreen"
         Closed="Window_Closed">
     <Window.Resources>
@@ -49,7 +49,7 @@
 
         <Grid Grid.Row="0"
               Grid.Column="0">
-            <ListBox ItemsSource="{Binding Entity.Projects}"
+            <ListBox ItemsSource="{Binding Entity.ObList}"
                      Background="{StaticResource BlackGround}"
                      SelectedItem="{Binding SelectedProject}"
                      ScrollViewer.HorizontalScrollBarVisibility="Disabled">
@@ -71,32 +71,42 @@
                                        VerticalAlignment="Center" 
                                        Margin="5" 
                                        FontSize="16"
-                                       Width="180"
+                                       Width="120"
                                        Foreground="White">
                             </TextBlock>
                             <Button Width="20"
-                                    Height="20">
+                                    Height="20"
+                                    Name="DeleteProjButton"
+                                    Command="{Binding DataContext.DeleteProjectCommand,RelativeSource={RelativeSource AncestorType=ListBox,Mode=FindAncestor}}"
+                                    >
                                 <Button.Template>
                                     <ControlTemplate>
-                                        <Path Data="M9.9000245,6.000003L6.0000001,9.8999988 12.100037,16.000007 6.0000001,22.100002 9.9000245,25.999997 16,19.900018 22.100037,25.999997 26,22.100002 19.900024,16.000007 26,9.8999988 22.100037,6.000003 16,12.099997z M16,0C24.799988,0 32,7.2000005 32,16.000007 32,24.800016 24.799988,32.000001 16,32.000001 7.2000123,32.000001 8.3946347E-08,24.800016 0,16.000007 8.3946347E-08,7.2000005 7.2000123,0 16,0z" Stretch="Uniform" 
-                                  Fill="#FFAB1111" 
-                                  Width="16" 
-                                  Height="16" 
-                                  Margin="0,0,0,0" 
-                                  RenderTransformOrigin="0.5,0.5">
-                                            <Path.RenderTransform>
-                                                <TransformGroup>
-                                                    <TransformGroup.Children>
-                                                        <RotateTransform Angle="0" />
-                                                        <ScaleTransform ScaleX="1" ScaleY="1" />
-                                                    </TransformGroup.Children>
-                                                </TransformGroup>
-                                            </Path.RenderTransform>
-                                        </Path>
+                                        <StackPanel Background="Transparent">
+                                            <Path Data="M9.9000245,6.000003L6.0000001,9.8999988 12.100037,16.000007 6.0000001,22.100002 9.9000245,25.999997 16,19.900018 22.100037,25.999997 26,22.100002 19.900024,16.000007 26,9.8999988 22.100037,6.000003 16,12.099997z M16,0C24.799988,0 32,7.2000005 32,16.000007 32,24.800016 24.799988,32.000001 16,32.000001 7.2000123,32.000001 8.3946347E-08,24.800016 0,16.000007 8.3946347E-08,7.2000005 7.2000123,0 16,0z" Stretch="Uniform" 
+                                              Fill="#908686" 
+                                              Width="16" 
+                                              Height="16" 
+                                              Margin="0,0,0,0" 
+                                              RenderTransformOrigin="0.5,0.5"
+                                              Name="DeleteProjPath">
+                                                <Path.RenderTransform>
+                                                    <TransformGroup>
+                                                        <TransformGroup.Children>
+                                                            <RotateTransform Angle="0" />
+                                                            <ScaleTransform ScaleX="1" ScaleY="1" />
+                                                        </TransformGroup.Children>
+                                                    </TransformGroup>
+                                                </Path.RenderTransform>
+                                            </Path>
+                                        </StackPanel>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Fill" TargetName="DeleteProjPath" Value="Red" />
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
                                     </ControlTemplate>
                                 </Button.Template>
                             </Button>
-                            
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
@@ -105,11 +115,12 @@
 
         <Grid Grid.Row="0"
               Grid.Column="1">
-            <DataGrid ItemsSource="{Binding SelectedProject.Items}"
+            <DataGrid ItemsSource="{Binding SelectedProject.ObList}"
                       AutoGenerateColumns="False"
                       IsSynchronizedWithCurrentItem="False"
                       CanUserAddRows="False"
-                      ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                      ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                      SelectedItem="{Binding SelectedItem}">
                 <DataGrid.Columns>
                     <DataGridTemplateColumn>
                         <DataGridTemplateColumn.CellTemplate>
@@ -125,15 +136,6 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <!--<DataGridCheckBoxColumn Width="20"
-                                            Binding="{Binding IsSelected}"
-                                            >
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="Checked">
-                                <mvvm:EventToCommand Command="{Binding DataContext.ItemCheckedCommand,RelativeSource={RelativeSource AncestorType=DataGrid,Mode=FindAncestor}}" CommandParameter="{Binding }"/>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </DataGridCheckBoxColumn>-->
                     <DataGridTextColumn Binding="{Binding Serial,Converter={StaticResource SerCVT}}"
                                         Header="序号"
                                         Width="60"
@@ -145,7 +147,48 @@
                     <DataGridTextColumn Binding="{Binding Note}"
                                         Header="备注"
                                         Width="200"
-                                        Foreground="White"/>
+                                        Foreground="#FF24BE24"/>
+                    <DataGridTemplateColumn Header="操作"
+                                            Width="60">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel HorizontalAlignment="Center"
+                                            VerticalAlignment="Center">
+                                    <Button Command="{Binding DataContext.DeleteItemCommand,RelativeSource={RelativeSource AncestorType=DataGrid,Mode=FindAncestor}}" CommandParameter="{Binding }">
+                                        <Button.Template>
+                                            <ControlTemplate>
+                                                <StackPanel Background="Transparent">
+                                                    <Path Data="M16,8.0000272L18,8.0000272 18,27.000028 16,27.000028z M11,8.0000272L13,8.0000272 13,27.000028 11,27.000028z M6.0000005,8.0000272L8.0000005,8.0000272 8.0000005,27.000028 6.0000005,27.000028z M2.9990063,5.0000274L2.9990063,30.000026 20.999983,30.000026 20.999006,5.0000274z M13.771989,1.9959999L10.198989,2.0000001C10.158989,2.025,9.9989892,2.241,9.9989892,2.6000001L9.9989892,3.0000258 13.998989,3.0000258 13.998989,2.6000001C13.998989,2.241,13.838988,2.025,13.771989,1.9959999z M10.198989,0L13.798988,0C15.031989,0,15.998989,1.142,15.998989,2.6000001L15.998989,3.0000258 22.999006,3.0000258 24,3.0000272 24,5.0000274 22.999006,5.0000274 22.999006,30.000026C22.999006,31.102992,22.102034,32.000026,20.999006,32.000026L2.9990063,32.000026C1.895979,32.000026,0.99900633,31.102992,0.9990066,30.000026L0.9990066,5.0000274 0,5.0000274 0,3.0000272 0.9990066,3.0000272 7.9989887,3.0000258 7.9989887,2.6000001C7.9989887,1.142,8.9659887,0,10.198989,0z" 
+                                                  Stretch="Uniform" 
+                                                  Fill="White" 
+                                                  Width="16" 
+                                                  Height="16" 
+                                                  Margin="0,0,0,0" 
+                                                  RenderTransformOrigin="0.5,0.5"
+                                                  Name="DeleteItemBtn"
+                                                  Opacity="0.5">
+                                                        <Path.RenderTransform>
+                                                            <TransformGroup>
+                                                                <TransformGroup.Children>
+                                                                    <RotateTransform Angle="0" />
+                                                                    <ScaleTransform ScaleX="1" ScaleY="1" />
+                                                                </TransformGroup.Children>
+                                                            </TransformGroup>
+                                                        </Path.RenderTransform>
+                                                    </Path>
+                                                </StackPanel>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="DeleteItemBtn" Property="Fill" Value="Red" />
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Button.Template>
+                                    </Button>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
