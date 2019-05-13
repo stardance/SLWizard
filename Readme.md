@@ -1,6 +1,6 @@
 ## SLWizard
 
-![](SLWizard\Resources\Img\MainShoot.jpg)
+![](https://ae01.alicdn.com/kf/HTB1rcg3VxjaK1RjSZKzq6xVwXXaE.jpg)
 
 SL小助手，方便各路手残选手游戏通关。
 
