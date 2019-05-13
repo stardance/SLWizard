@@ -20,7 +20,7 @@ SL小助手，方便各路手残选手游戏通关。
 
 
 
-如果您喜欢的话，请给个Star:star:
+如果您喜欢的话，请给个[Star](<https://github.com/stardance/SLWizard>):star:
 
 如果有任何意见，欢迎PullRequest或者Issue:smiley:
 

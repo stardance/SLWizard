@@ -49,8 +49,11 @@
   <ItemGroup>
     <Compile Include="Entities\ArchiveData.cs" />
     <Compile Include="EventAggregator.cs" />
+    <Compile Include="IniFiles.cs" />
     <Compile Include="KeyboardHook.cs" />
     <Compile Include="KeyboardListener.cs" />
+    <Compile Include="Message\BackupMessage.cs" />
+    <Compile Include="Message\RestoreMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Message\SaveConfigMessage.cs" />
     <Compile Include="SerialTool.cs" />

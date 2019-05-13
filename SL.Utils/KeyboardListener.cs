@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SL.Utils.Message;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,11 +22,18 @@ namespace SL.Utils
 
         private void hook_KeyDown(object sender, KeyEventArgs e)
         {
-            //判断按下的键（Alt + A） 
-            if (e.Control && e.KeyCode == Keys.Z)
+            //backup action
+            if (e.KeyValue == (int)Keys.A && (int)Control.ModifierKeys == (int)Keys.Alt)
             {
-                System.Windows.Forms.MessageBox.Show("ddd");
+                EventAggregatorHost.Aggregator.SendMessage<BackupMessage>(default(BackupMessage));
             }
+        
+            //restore action
+            if(e.KeyValue == (int)Keys.Z && (int)Control.ModifierKeys == (int)Keys.Alt)
+            {
+                EventAggregatorHost.Aggregator.SendMessage<RestoreMessage>(default(RestoreMessage));
+            }
+
         }
 
         private void K_hook_KeyPressEvent(object sender, KeyPressEventArgs e)

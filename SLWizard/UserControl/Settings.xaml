@@ -9,6 +9,11 @@
         Height="300" 
         Width="300"
         WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="Margin" Value="0 4" />
+        </Style>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -18,16 +23,56 @@
         <Border Grid.Row="0">
             <TabControl>
                 <TabItem Header="按键">
-                    <StackPanel VerticalAlignment="Center"
-                                HorizontalAlignment="Center">
-                        <TextBlock Text="尚未实现" />
-                    </StackPanel>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="30" />
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Row="0"
+                                    Orientation="Horizontal"
+                                    VerticalAlignment="Center">
+                            <TextBlock Text="备份:"/>
+                            <ComboBox Width="80"/>
+                            <TextBlock Text="+"/>
+                            <ComboBox Width="80"/>
+                        </StackPanel>
+                        <StackPanel Grid.Row="1"
+                                    Orientation="Horizontal"
+                                    VerticalAlignment="Center">
+                            <TextBlock Text="载入:"/>
+                            <ComboBox Width="80"/>
+                            <TextBlock Text="+"/>
+                            <ComboBox Width="80"/>
+                        </StackPanel>
+                    </Grid>
                 </TabItem>
                 <TabItem Header="关于">
-                    <StackPanel VerticalAlignment="Center"
-                                HorizontalAlignment="Center">
-                        <TextBlock Text="尚未实现" />
-                    </StackPanel>
+                    <Border Margin="8"
+                            BorderThickness="1"
+                            BorderBrush="Violet">
+                        <StackPanel VerticalAlignment="Top"
+                                HorizontalAlignment="Center"
+                                Orientation="Vertical">
+                            <TextBlock Text="SLWizard"
+                                   FontSize="24"/>
+                            <TextBlock 
+                                   Text="版本：0.1"/>
+                            <TextBlock 
+                                   Text="By Stardance"/>
+                            <TextBlock >
+                            <Hyperlink NavigateUri="https://github.com/stardance/SLWizard/releases" 
+                                       Name="linkHelp" 
+                                       Click="linkDmsite_Click">
+                                获取最新版本 
+                            </Hyperlink>
+                            </TextBlock>
+                            <TextBlock Text="支持邮箱：862757499@qq.com"/>
+                        </StackPanel>
+                    </Border>
                 </TabItem>
             </TabControl>
         </Border>

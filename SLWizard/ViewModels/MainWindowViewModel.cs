@@ -15,7 +15,7 @@ using System.Windows;
 
 namespace SLWizard.ViewModels
 {
-    public class MainWindowViewModel:ViewModelBase,IListener<SysMessage>,IListener<SaveConfigMessage>
+    public class MainWindowViewModel:ViewModelBase,IListener<SysMessage>,IListener<SaveConfigMessage>,IListener<BackupMessage>,IListener<RestoreMessage>
     {
         public KeyboardListener keyListener { get; set; }
 
@@ -289,6 +289,16 @@ namespace SLWizard.ViewModels
             Entity.Projects.ForEach(it => it.Items = it.ObList.ToList());
             Entity.Projects = Entity.ObList?.ToList();
             XmlHelper.Write<ArchiveData>(configPath, Entity);
+        }
+
+        public void Handle(BackupMessage message)
+        {
+            SaveCommand.Execute(null);
+        }
+
+        public void Handle(RestoreMessage message)
+        {
+            LoadCommand.Execute(null);
         }
     }
 }

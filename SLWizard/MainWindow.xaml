@@ -134,15 +134,17 @@
                                 </CheckBox>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
+                    </DataGridTemplateColumn >
                     <DataGridTextColumn Binding="{Binding Serial,Converter={StaticResource SerCVT}}"
                                         Header="序号"
                                         Width="60"
-                                        Foreground="White"/>
+                                        Foreground="White"
+                                        IsReadOnly="True"/>
                     <DataGridTextColumn Binding="{Binding CreateTime,StringFormat={}{0:yyyy-MM-dd HH:mm}}"
                                         Header="创建日期"
                                         Width="140"
-                                        Foreground="White"/>
+                                        Foreground="White"
+                                        IsReadOnly="True"/>
                     <DataGridTextColumn Binding="{Binding Note}"
                                         Header="备注"
                                         Width="200"
