@@ -251,11 +251,9 @@ namespace SLWizard.ViewModels
                             EventAggregatorHost.Aggregator.SendMessage<SysMessage>(new SysMessage($"{SelectedItem.Note}({SelectedItem.Serial})已删除。"));
 
                             int deleteingSerial = SelectedItem.Serial;
-                            SelectedProject.Items.Remove(SelectedItem);
-                            SelectedProject.Items.Where(it => it.Serial > deleteingSerial).ToList().ForEach(it => it.Serial--);
-
+                            SelectedProject.ObList.Remove(SelectedItem);
+                            SelectedProject.ObList.Where(it => it.Serial > deleteingSerial).ToList().ForEach(it => it.Serial--);
                         }
-
                     });
                 }
                 return deleteItemCommand;

@@ -11,7 +11,7 @@
         mc:Ignorable="d"
         Title="SLWizard" 
         Height="500" 
-        Width="700"
+        Width="730"
         WindowStartupLocation="CenterScreen"
         Closed="Window_Closed">
     <Window.Resources>
@@ -25,7 +25,6 @@
     </Window.DataContext>
     <Grid Background="{StaticResource BlackGround}">
         <Grid.RowDefinitions>
-            <!--<RowDefinition Height="25"/>-->
             <RowDefinition Height="*"/>
             <RowDefinition Height="40"/>
             <RowDefinition Height="25"/>
@@ -142,7 +141,7 @@
                                         Foreground="White"/>
                     <DataGridTextColumn Binding="{Binding CreateTime,StringFormat={}{0:yyyy-MM-dd HH:mm}}"
                                         Header="创建日期"
-                                        Width="120"
+                                        Width="140"
                                         Foreground="White"/>
                     <DataGridTextColumn Binding="{Binding Note}"
                                         Header="备注"
@@ -152,21 +151,24 @@
                                             Width="60">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <StackPanel HorizontalAlignment="Center"
-                                            VerticalAlignment="Center">
-                                    <Button Command="{Binding DataContext.DeleteItemCommand,RelativeSource={RelativeSource AncestorType=DataGrid,Mode=FindAncestor}}" CommandParameter="{Binding }">
+                                <StackPanel VerticalAlignment="Center"
+                                            HorizontalAlignment="Center">
+                                    <Button Command="{Binding DataContext.DeleteItemCommand,RelativeSource={RelativeSource AncestorType=DataGrid,Mode=FindAncestor}}" 
+                                            CommandParameter="{Binding }"
+                                            >
                                         <Button.Template>
                                             <ControlTemplate>
-                                                <StackPanel Background="Transparent">
+                                                <StackPanel Background="Transparent" 
+                                                            >
                                                     <Path Data="M16,8.0000272L18,8.0000272 18,27.000028 16,27.000028z M11,8.0000272L13,8.0000272 13,27.000028 11,27.000028z M6.0000005,8.0000272L8.0000005,8.0000272 8.0000005,27.000028 6.0000005,27.000028z M2.9990063,5.0000274L2.9990063,30.000026 20.999983,30.000026 20.999006,5.0000274z M13.771989,1.9959999L10.198989,2.0000001C10.158989,2.025,9.9989892,2.241,9.9989892,2.6000001L9.9989892,3.0000258 13.998989,3.0000258 13.998989,2.6000001C13.998989,2.241,13.838988,2.025,13.771989,1.9959999z M10.198989,0L13.798988,0C15.031989,0,15.998989,1.142,15.998989,2.6000001L15.998989,3.0000258 22.999006,3.0000258 24,3.0000272 24,5.0000274 22.999006,5.0000274 22.999006,30.000026C22.999006,31.102992,22.102034,32.000026,20.999006,32.000026L2.9990063,32.000026C1.895979,32.000026,0.99900633,31.102992,0.9990066,30.000026L0.9990066,5.0000274 0,5.0000274 0,3.0000272 0.9990066,3.0000272 7.9989887,3.0000258 7.9989887,2.6000001C7.9989887,1.142,8.9659887,0,10.198989,0z" 
-                                                  Stretch="Uniform" 
-                                                  Fill="White" 
-                                                  Width="16" 
-                                                  Height="16" 
-                                                  Margin="0,0,0,0" 
-                                                  RenderTransformOrigin="0.5,0.5"
-                                                  Name="DeleteItemBtn"
-                                                  Opacity="0.5">
+                                                          Stretch="Uniform" 
+                                                          Fill="White" 
+                                                          Width="16" 
+                                                          Height="16" 
+                                                          Margin="0,0,0,0" 
+                                                          RenderTransformOrigin="0.5,0.5"
+                                                          Name="DeleteItemBtn"
+                                                          Opacity="0.5">
                                                         <Path.RenderTransform>
                                                             <TransformGroup>
                                                                 <TransformGroup.Children>
@@ -207,7 +209,7 @@
                     <PathGeometry Figures="M24.574808,0C25.477812,0,26.379816,0.20100307,27.282821,0.50100708L27.984824,0.80201149 23.471802,5.1150765C23.170801,5.416081,23.0708,5.8170867,23.371802,6.2180929L25.878814,8.7251303C26.078815,8.9261334 26.279816,9.026135 26.479816,9.0261347 26.580817,8.9261334 26.680818,8.9261334 26.780818,8.8261321L30.993838,4.6130691 31.494841,4.7140703C32.497846,7.3211093 31.995843,10.230153 30.090834,12.135181 28.485826,13.740206 26.179815,14.542217 23.872804,14.04121 23.671803,14.241213 14.144758,23.769356 13.943757,23.969358 14.445759,26.276393 13.642756,28.583427 12.038748,30.187452 10.132739,32.093481 7.8267279,32.394485 5.2187157,31.39147L4.8177137,31.190466C4.7177134,31.190466,4.6167126,31.090466,4.5167122,31.090466L8.6287317,27.078405C9.0297337,26.677399,9.0297337,25.975389,8.6287317,25.574383L6.3217211,23.067345C6.0207195,22.966344,5.6197176,23.267348,5.318716,23.568353L1.2066956,27.780416 0.50469208,27.479411C-0.49731255,24.872372 0.0036907196,21.963328 1.9097004,20.0583 3.5137072,18.453276 5.8207178,17.852267 8.126729,18.253273 8.2277298,18.152272 17.955776,8.3241243 18.155777,8.1231215 17.654775,5.8170867 18.256778,3.5100527 19.860785,1.9050283 21.164791,0.70201015 22.769799,0 24.574808,0z" />
                 </res:CubeButton.PathData>
             </res:CubeButton>
-            <res:CubeButton Content="保存"
+            <res:CubeButton Content="备份"
                     Margin="5"
                     Width="100"
                     Style="{StaticResource CubeButton}"

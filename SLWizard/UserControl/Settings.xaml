@@ -20,11 +20,14 @@
                 <TabItem Header="按键">
                     <StackPanel VerticalAlignment="Center"
                                 HorizontalAlignment="Center">
-                        <TextBlock Text="待开发" />
+                        <TextBlock Text="尚未实现" />
                     </StackPanel>
                 </TabItem>
                 <TabItem Header="关于">
-
+                    <StackPanel VerticalAlignment="Center"
+                                HorizontalAlignment="Center">
+                        <TextBlock Text="尚未实现" />
+                    </StackPanel>
                 </TabItem>
             </TabControl>
         </Border>
