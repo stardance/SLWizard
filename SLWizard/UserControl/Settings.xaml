@@ -36,19 +36,46 @@
                                     Orientation="Horizontal"
                                     VerticalAlignment="Center">
                             <TextBlock Text="备份:"/>
-                            <ComboBox Width="80"/>
+                            <ComboBox Width="80"
+                                      ItemsSource="{Binding ModifierKeys}"
+                                      DisplayMemberPath="Key"
+                                      SelectedValuePath="Value"
+                                      SelectedItem="{Binding BackupMKey}"/>
                             <TextBlock Text="+"/>
-                            <ComboBox Width="80"/>
+                            <ComboBox Width="80"
+                                      ItemsSource="{Binding DicKeys}"
+                                      DisplayMemberPath="Key"
+                                      SelectedValuePath="Value"
+                                      SelectedItem="{Binding BackupKey}"/>
                         </StackPanel>
                         <StackPanel Grid.Row="1"
                                     Orientation="Horizontal"
                                     VerticalAlignment="Center">
                             <TextBlock Text="载入:"/>
-                            <ComboBox Width="80"/>
+                            <ComboBox Width="80"
+                                      ItemsSource="{Binding ModifierKeys}"
+                                      DisplayMemberPath="Key"
+                                      SelectedValuePath="Value"
+                                      SelectedItem="{Binding StoreMKey}"/>
                             <TextBlock Text="+"/>
-                            <ComboBox Width="80"/>
+                            <ComboBox Width="80"
+                                      ItemsSource="{Binding DicKeys}"
+                                      DisplayMemberPath="Key"
+                                      SelectedValuePath="Value"
+                                      SelectedItem="{Binding StoreKey}"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="5"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Center">
+                            <Button Content="确定"
+                                    Command="{Binding SaveCommand}"
+                                    Width="80"
+                                    Height="25"/>
                         </StackPanel>
                     </Grid>
+
+                    
                 </TabItem>
                 <TabItem Header="关于">
                     <Border Margin="8"
