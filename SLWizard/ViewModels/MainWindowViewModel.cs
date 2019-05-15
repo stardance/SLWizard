@@ -78,6 +78,14 @@ namespace SLWizard.ViewModels
                 Entity = XmlHelper.Read<ArchiveData>(configPath);
                 Entity.Projects.ForEach(it => it.ObList = new System.Collections.ObjectModel.ObservableCollection<ArchiveItem>(it.Items));
                 Entity.ObList = new System.Collections.ObjectModel.ObservableCollection<ArchiveProject>(Entity.Projects);
+                if (Entity.Projects.Exists(it => it.IsSelected == true))
+                {
+                    SelectedProject = Entity.Projects.Single(it => it.IsSelected == true);
+                    if (SelectedProject.Items.Exists(it => it.IsSelected == true))
+                    {
+                        SelectedItem = SelectedProject.Items.Single(it => it.IsSelected == true);
+                    }
+                }
             }
         }
 
@@ -145,17 +153,27 @@ namespace SLWizard.ViewModels
                     string guid = SerialTool.NewID();
                     string bakPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"Archive", SelectedProject.ProjectName, $"{guid}.bak");
                     File.Copy(SelectedProject.FilePath, bakPath);
-                    SelectedProject.ObList.Add(new ArchiveItem
+                    var item = new ArchiveItem
                     {
                         AbsolutePath = bakPath,
                         CreateTime = DateTime.Now.ToString("s"),
                         Note = string.Empty,
                         Serial = serial,
                         Guid = guid
-                    });
+                    };
+                    if (new IniFiles("Settings.ini").ReadString("Misc", "AutoCheckNewItem", "0") == "1")
+                    {
+                        SelectedProject.ObList.Where(it => it.Guid != item.Guid).ToList().ForEach(it => it.IsSelected = false);
+                        item.IsSelected = true;
+                    }
+                    SelectedProject.ObList.Add(item);
+                    SelectedItem = item;
+                    
                     SaveData();
                     RaisePropertyChanged("");
                     EventAggregatorHost.Aggregator.SendMessage<SysMessage>(new SysMessage($"对文件{SelectedProject.ProjectName}的保存已完成！"));
+                    string soundPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Sound", "Windows Foreground.wav");
+                    SoundTool.Play(soundPath);
                 }));
             }
         }
@@ -171,7 +189,9 @@ namespace SLWizard.ViewModels
                     if (SelectedItem != null && SelectedProject != null)
                     {
                         File.Copy(SelectedItem.AbsolutePath, SelectedProject.FilePath, true);
-                        EventAggregatorHost.Aggregator.SendMessage<SysMessage>(new SysMessage($"文件{SelectedProject.ProjectName}已重新载入！")); 
+                        EventAggregatorHost.Aggregator.SendMessage<SysMessage>(new SysMessage($"文件{SelectedProject.ProjectName}已重新载入！"));
+                        string soundPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Sound", "Windows Notify System Generic.wav");
+                        SoundTool.Play(soundPath);
                     }
                 });
             }
@@ -275,7 +295,7 @@ namespace SLWizard.ViewModels
                         {
                             Directory.Delete(SelectedProject.FilePath,true);
                             EventAggregatorHost.Aggregator.SendMessage<SysMessage>(new SysMessage($"项目{SelectedProject.ProjectName}已删除。"));
-                            Entity.Projects.Remove(SelectedProject);
+                            Entity.ObList.Remove(SelectedProject);
                         }
                     });
                 }

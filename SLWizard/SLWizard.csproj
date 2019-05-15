@@ -122,6 +122,9 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="Settings.ini">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SL.Utils\SL.Utils.csproj">
@@ -134,6 +137,14 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Save.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\Sound\Windows Foreground.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Sound\Windows Notify System Generic.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

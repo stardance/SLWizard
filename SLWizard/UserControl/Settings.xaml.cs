@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight.Command;
 using SL.Utils;
+using SL.Utils.Message;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -50,10 +51,10 @@ namespace SLWizard.UserControl
             }
         }
 
-        private int selectMKey;
+        private KeyValuePair<string,int> selectMKey;
 
 
-        public int BackupMKey
+        public KeyValuePair<string, int> BackupMKey
         {
             get { return selectMKey; }
             set
@@ -63,9 +64,9 @@ namespace SLWizard.UserControl
             }
         }
 
-        private int selectedKey;
+        private KeyValuePair<string, int> selectedKey;
 
-        public int BackupKey
+        public KeyValuePair<string, int> BackupKey
 
         {
             get { return selectedKey; }
@@ -78,28 +79,36 @@ namespace SLWizard.UserControl
         }
 
 
-        private int storeMKey;
+        private KeyValuePair<string, int> storeMKey;
 
-        public int StoreMKey
+        public KeyValuePair<string, int> RestoreMKey
         {
             get { return storeMKey; }
             set
             {
                 storeMKey = value;
-                RaisePropertyChanged(nameof(StoreMKey));
+                RaisePropertyChanged(nameof(RestoreMKey));
             }
         }
 
-        private int storeKey;
+        private KeyValuePair<string, int> storeKey;
 
-        public int StoreKey
+        public KeyValuePair<string, int> RestoreKey
         {
             get { return storeKey; }
             set
             {
                 storeKey = value;
-                RaisePropertyChanged(nameof(StoreKey));
+                RaisePropertyChanged(nameof(RestoreKey));
             }
+        }
+
+        private bool autocheckNewItem;
+
+        public bool AutoCheckNewItem
+        {
+            get { return autocheckNewItem; }
+            set { autocheckNewItem = value; }
         }
 
 
@@ -111,39 +120,54 @@ namespace SLWizard.UserControl
         public Settings()
         {
             InitializeComponent();
+            #region Initialize Dictionary
             modifierKeys = new Dictionary<string, int>();
             modifierKeys.Add(Keys.Alt.ToString(), (int)Keys.Alt);
             modifierKeys.Add(Keys.Shift.ToString(), (int)Keys.Shift);
             modifierKeys.Add(Keys.Control.ToString(), (int)Keys.Control);
             keys = new Dictionary<string, int>();
-            keys.Add(Keys.A.ToString(),(int)Keys.A);
-            keys.Add(Keys.B.ToString(),(int)Keys.B);
-            keys.Add(Keys.C.ToString(),(int)Keys.C);
-            keys.Add(Keys.D.ToString(),(int)Keys.D);
-            keys.Add(Keys.E.ToString(),(int)Keys.E);
-            keys.Add(Keys.F.ToString(),(int)Keys.F);
-            keys.Add(Keys.G.ToString(),(int)Keys.G);
-            keys.Add(Keys.H.ToString(),(int)Keys.H);
-            keys.Add(Keys.I.ToString(),(int)Keys.I);
-            keys.Add(Keys.J.ToString(),(int)Keys.J);
-            keys.Add(Keys.K.ToString(),(int)Keys.K);
-            keys.Add(Keys.L.ToString(),(int)Keys.L);
-            keys.Add(Keys.M.ToString(),(int)Keys.M);
-            keys.Add(Keys.N.ToString(),(int)Keys.N);
-            keys.Add(Keys.O.ToString(),(int)Keys.O);
-            keys.Add(Keys.P.ToString(),(int)Keys.P);
-            keys.Add(Keys.Q.ToString(),(int)Keys.Q);
-            keys.Add(Keys.R.ToString(),(int)Keys.R);
-            keys.Add(Keys.S.ToString(),(int)Keys.S);
-            keys.Add(Keys.T.ToString(),(int)Keys.T);
-            keys.Add(Keys.U.ToString(),(int)Keys.U);
-            keys.Add(Keys.V.ToString(),(int)Keys.V);
-            keys.Add(Keys.W.ToString(),(int)Keys.W);
-            keys.Add(Keys.X.ToString(),(int)Keys.X);
-            keys.Add(Keys.Y.ToString(),(int)Keys.Y);
-            keys.Add(Keys.Z.ToString(),(int)Keys.Z);
+            keys.Add(Keys.A.ToString(), (int)Keys.A);
+            keys.Add(Keys.B.ToString(), (int)Keys.B);
+            keys.Add(Keys.C.ToString(), (int)Keys.C);
+            keys.Add(Keys.D.ToString(), (int)Keys.D);
+            keys.Add(Keys.E.ToString(), (int)Keys.E);
+            keys.Add(Keys.F.ToString(), (int)Keys.F);
+            keys.Add(Keys.G.ToString(), (int)Keys.G);
+            keys.Add(Keys.H.ToString(), (int)Keys.H);
+            keys.Add(Keys.I.ToString(), (int)Keys.I);
+            keys.Add(Keys.J.ToString(), (int)Keys.J);
+            keys.Add(Keys.K.ToString(), (int)Keys.K);
+            keys.Add(Keys.L.ToString(), (int)Keys.L);
+            keys.Add(Keys.M.ToString(), (int)Keys.M);
+            keys.Add(Keys.N.ToString(), (int)Keys.N);
+            keys.Add(Keys.O.ToString(), (int)Keys.O);
+            keys.Add(Keys.P.ToString(), (int)Keys.P);
+            keys.Add(Keys.Q.ToString(), (int)Keys.Q);
+            keys.Add(Keys.R.ToString(), (int)Keys.R);
+            keys.Add(Keys.S.ToString(), (int)Keys.S);
+            keys.Add(Keys.T.ToString(), (int)Keys.T);
+            keys.Add(Keys.U.ToString(), (int)Keys.U);
+            keys.Add(Keys.V.ToString(), (int)Keys.V);
+            keys.Add(Keys.W.ToString(), (int)Keys.W);
+            keys.Add(Keys.X.ToString(), (int)Keys.X);
+            keys.Add(Keys.Y.ToString(), (int)Keys.Y);
+            keys.Add(Keys.Z.ToString(), (int)Keys.Z); 
+            #endregion
             this.DataContext = this;
             inireader = new IniFiles("Settings.ini");
+            int backupMKey = Convert.ToInt32(inireader.ReadString("HotKey", "BackupModifierKey","0"));
+            int backupKey = Convert.ToInt32(inireader.ReadString("HotKey", "BackupKey", "0"));
+            int restoreMKey = Convert.ToInt32(inireader.ReadString("HotKey", "RestoreModifierKey", "0"));
+            int restoreKey = Convert.ToInt32(inireader.ReadString("HotKey", "RestoreKey", "0"));
+            AutoCheckNewItem = inireader.ReadString("Misc", "AutoCheckNewItem", "0") == "1";
+            string backupMKeyName = Enum.GetName(typeof(Keys), backupMKey);
+            string backupKeyName = Enum.GetName(typeof(Keys), backupKey);
+            string restoreMKeyName = Enum.GetName(typeof(Keys), restoreMKey);
+            string restoreKeyName = Enum.GetName(typeof(Keys), restoreKey);
+            BackupMKey = new KeyValuePair<string, int>(backupMKeyName, backupMKey);
+            BackupKey = new KeyValuePair<string, int>(backupKeyName, backupKey);
+            RestoreMKey = new KeyValuePair<string, int>(restoreMKeyName,restoreMKey);
+            RestoreKey = new KeyValuePair<string, int>(restoreKeyName, restoreKey);
         }
 
         private void linkDmsite_Click(object sender, RoutedEventArgs e)
@@ -166,8 +190,12 @@ namespace SLWizard.UserControl
             {
                 return saveCommand ?? new RelayCommand(()=>
                 {
-                    inireader.WriteString("HotKey", "BackupModifierKey", BackupMKey.ToString());
-                    inireader.WriteString("HotKey", "BackupKey", BackupKey.ToString());
+                    inireader.WriteString("HotKey", "BackupModifierKey", BackupMKey.Value.ToString());
+                    inireader.WriteString("HotKey", "BackupKey", BackupKey.Value.ToString());
+                    inireader.WriteString("HotKey", "RestoreModifierKey", RestoreMKey.Value.ToString());
+                    inireader.WriteString("HotKey", "RestoreKey", RestoreKey.Value.ToString());
+                    inireader.WriteString("Misc", "AutoCheckNewItem", AutoCheckNewItem ? "1" : "0");
+                    EventAggregatorHost.Aggregator.SendMessage<SysMessage>(new SysMessage("保存成功！"));
                 });
             }
         }

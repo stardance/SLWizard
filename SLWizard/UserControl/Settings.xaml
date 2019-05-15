@@ -4,14 +4,19 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SLWizard.UserControl"
+        xmlns:res="clr-namespace:SLWizard.Resources"
         mc:Ignorable="d"
-        Title="Settings" 
-        Height="300" 
-        Width="300"
+        Title="设置" 
+        Height="400" 
+        Width="400"
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style TargetType="TextBlock">
             <Setter Property="Margin" Value="0 4" />
+            <Setter Property="Foreground" Value="White" />
+        </Style>
+        <Style TargetType="ComboBox">
+            <Setter Property="Margin" Value="3" />
         </Style>
     </Window.Resources>
     <Grid>
@@ -20,9 +25,9 @@
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
 
-        <Border Grid.Row="0">
-            <TabControl>
-                <TabItem Header="按键">
+        <Border Grid.Row="0" Background="{StaticResource BlackGround}">
+            <TabControl Background="{StaticResource BlackGround}">
+                <TabItem Header="基本设置">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="30" />
@@ -40,13 +45,15 @@
                                       ItemsSource="{Binding ModifierKeys}"
                                       DisplayMemberPath="Key"
                                       SelectedValuePath="Value"
-                                      SelectedItem="{Binding BackupMKey}"/>
+                                      SelectedItem="{Binding BackupMKey}"
+                                      Style="{StaticResource stlComboBox}"/>
                             <TextBlock Text="+"/>
                             <ComboBox Width="80"
                                       ItemsSource="{Binding DicKeys}"
                                       DisplayMemberPath="Key"
                                       SelectedValuePath="Value"
-                                      SelectedItem="{Binding BackupKey}"/>
+                                      SelectedItem="{Binding BackupKey}"
+                                      Style="{StaticResource stlComboBox}"/>
                         </StackPanel>
                         <StackPanel Grid.Row="1"
                                     Orientation="Horizontal"
@@ -56,22 +63,35 @@
                                       ItemsSource="{Binding ModifierKeys}"
                                       DisplayMemberPath="Key"
                                       SelectedValuePath="Value"
-                                      SelectedItem="{Binding StoreMKey}"/>
+                                      SelectedItem="{Binding RestoreMKey,UpdateSourceTrigger=PropertyChanged}"
+                                      Style="{StaticResource stlComboBox}"/>
                             <TextBlock Text="+"/>
                             <ComboBox Width="80"
                                       ItemsSource="{Binding DicKeys}"
                                       DisplayMemberPath="Key"
                                       SelectedValuePath="Value"
-                                      SelectedItem="{Binding StoreKey}"/>
+                                      SelectedItem="{Binding RestoreKey,UpdateSourceTrigger=PropertyChanged}"
+                                      Style="{StaticResource stlComboBox}"/>
                         </StackPanel>
-
+                        <StackPanel Grid.Row="2"
+                                    Orientation="Horizontal"
+                                    VerticalAlignment="Center">
+                            <CheckBox VerticalAlignment="Center"
+                                      IsChecked="{Binding AutoCheckNewItem,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBlock Text="自动勾选新增项作为首选项"
+                                       Margin="4 0 0 0"/>
+                        </StackPanel>
                         <StackPanel Grid.Row="5"
                                     HorizontalAlignment="Right"
                                     VerticalAlignment="Center">
-                            <Button Content="确定"
-                                    Command="{Binding SaveCommand}"
-                                    Width="80"
-                                    Height="25"/>
+                            <res:CubeButton Content="确定"
+                                            Command="{Binding SaveCommand}"
+                                            Width="80"
+                                            Height="25"
+                                            Style="{StaticResource CubeButton}"
+                                            PathFill="Green"
+                                            PathFigure="M28.718018,0L32,3.2819897 10.666016,24.616999 0,13.951997 3.2810059,10.670007 10.666016,18.055033z">
+                            </res:CubeButton>
                         </StackPanel>
                     </Grid>
 

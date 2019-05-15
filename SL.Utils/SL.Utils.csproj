@@ -58,6 +58,7 @@
     <Compile Include="Message\SaveConfigMessage.cs" />
     <Compile Include="SerialTool.cs" />
     <Compile Include="Message\SysMessage.cs" />
+    <Compile Include="SoundTool.cs" />
     <Compile Include="XmlHelper.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

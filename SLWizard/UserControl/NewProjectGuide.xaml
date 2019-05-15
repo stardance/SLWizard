@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SLWizard.UserControl"
+        xmlns:res="clr-namespace:SLWizard.Resources"
         mc:Ignorable="d"
         Title="新建项目向导" 
         Height="180" 
@@ -47,25 +48,33 @@
                      FontSize="16"
                      Name="FilePosition"
                      />
-                <Button Width="76"
+                <res:CubeButton Width="76"
                     Height="28"
                     Margin="2"
                     Content="浏览"
                     FontSize="16"
-                    Name="SelectFileDialog"
-                    Click="SelectFileDialog_Click"/>
+                    x:Name="SelectFileDialog"
+                    Click="SelectFileDialog_Click"
+                    Style="{StaticResource CubeButton}"
+                    PathFill="Yellow"
+                    PathFigure="M12.18726,4.5C10.687278,4.5 9.0872916,5 7.7873201,5.8999634 4.6873526,8.0999756 4.0873536,12.199951 6.5873226,15 9.0872916,17.799988 13.687241,18.299988 16.887214,16.099976 20.087155,13.899963 20.58715,9.7999878 18.08718,7 16.687203,5.3999634 14.587224,4.5999756 12.487244,4.5z M12.387269,0L12.687253,0C16.287215,0.099975586 19.787171,1.5 22.08713,4.1999512 25.587087,8.0999756 25.587087,13.5 22.387145,17.399963L31.987002,28.299988 26.787085,32 17.187198,21.099976C12.18726,23 6.187334,21.799988 2.6873774,17.799988 -1.6125573,13 -0.61256966,6.0999756 4.6873526,2.3999634 6.9873118,0.79998779 9.6872901,0 12.387269,0z">
+                </res:CubeButton>
             </StackPanel>
 
             <StackPanel Grid.Row="2"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center">
-                <Button Width="76"
+                <res:CubeButton Width="76"
                     Height="28"
                     Margin="0 0 14 0"
                     Content="确定"
-                    Name="Confirm"
+                    x:Name="Confirm"
                     FontSize="16"
-                    Click="Confirm_Click"/>
+                    Click="Confirm_Click"
+                    Style="{StaticResource CubeButton}"
+                    PathFill="Green"
+                    PathFigure="M28.718018,0L32,3.2819897 10.666016,24.616999 0,13.951997 3.2810059,10.670007 10.666016,18.055033z">
+                </res:CubeButton>
             </StackPanel>
         </Grid>
     </Border>

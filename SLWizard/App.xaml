@@ -8,6 +8,7 @@
         <SolidColorBrush Color="Black" x:Key="BlackGround"/>
         <SolidColorBrush Color="#9090A1" x:Key="InfoBarGround" />
         <cvt:BackgroundConverter x:Key="bgCvt" />
+        <SolidColorBrush Color="#FF777A7D" x:Key="ControlBaseColor" />
 
         <Style TargetType="{x:Type ListViewItem}">
             <Setter Property="Background">
@@ -34,15 +35,6 @@ Converter="{StaticResource bgCvt}"/>
                 </Setter.Value>
             </Setter>
         </Style>
-
-        <!--标题栏样式-->
-        <!--<Style  TargetType="DataGridColumnHeader" >
-        <Setter Property="Width" Value="50"/>
-        <Setter Property="Height" Value="30"/>
-        <Setter Property="FontSize" Value="14" />
-        <Setter Property="Background" Value="White" />
-        <Setter  Property="FontWeight"  Value="Bold"/>
-    </Style>-->
 
         <Style TargetType="DataGridColumnHeader">
             <Setter Property="SnapsToDevicePixels" Value="True" />
@@ -132,17 +124,20 @@ Converter="{StaticResource bgCvt}"/>
                                     Opacity="0.7"
                                     VerticalAlignment="Center">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="20" />
+                                    <ColumnDefinition Width="auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
                                 <Path Grid.Column="0"
                                       Width = "16"
                                       Height = "16"
-                                      Data="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=PathData}"  
                                       Stretch="Uniform" 
-                                      Fill="White"
-                                      Stroke="White"
-                                      Margin="4 0 0 0"/>
+                                      Fill="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=PathFill}"
+                                      Stroke="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=PathEdge}"
+                                      Margin="4 0 0 0">
+                                    <Path.Data>
+                                        <PathGeometry Figures="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=PathFigure}" />
+                                    </Path.Data>
+                                </Path>
                                 <TextBlock Grid.Column="1"
                                            Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=Content}"
                                            FontSize="16"
@@ -155,6 +150,103 @@ Converter="{StaticResource bgCvt}"/>
                                 <Setter TargetName="PanelMain" Property="Opacity" Value="1" />
                             </Trigger>
                         </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+        <Style TargetType="TabItem">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TabItem">
+                        <Grid Name="Panel">
+                            <ContentPresenter x:Name="ContentSite"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"
+                                        ContentSource="Header"
+                                        Margin="2,2"
+                                        Width="60"
+                                        Height="20"
+                                        />
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="Panel" Property="Background" Value="#FF8B60B4" />
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="False">
+                                <Setter TargetName="Panel" Property="Background" Value="#FFAAAAA3" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="ToggleButton" x:Key="stlToggleButton">
+            <Setter Property="Foreground" Value="White"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Border x:Name="Back" Background="#F7FDF7" BorderThickness="1" BorderBrush="Transparent">
+                            <Path Name="PathFill" Fill="#6D6D6D" Width="8" Height="6" StrokeThickness="0" Data="M5,0 L10,10 L0,10 z" RenderTransformOrigin="0.5,0.5" Stretch="Fill">
+                                <Path.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform/>
+                                        <SkewTransform/>
+                                        <RotateTransform Angle="180"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Path.RenderTransform>
+                            </Path>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="PathFill" Property="Fill" Value="White"></Setter>
+                                <Setter TargetName="Back" Property="Background" Value="#6D6D6D"></Setter>
+                                <Setter TargetName="Back" Property="BorderBrush" Value="#6D6D6D"></Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <Style TargetType="ComboBox" x:Key="stlComboBox">
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.CanContentScroll" Value="True"/>
+            <Setter Property="HorizontalAlignment" Value="Left"></Setter>
+            <Setter Property="Foreground" Value="Black"></Setter>
+            <Setter Property="Height" Value="20"></Setter>
+            <Setter Property="Margin" Value="4,0,4,0"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBox">
+                        <Grid Background="#F7FDF7">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.7*"/>
+                                <ColumnDefinition Width="0.3*" MaxWidth="30"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox  Grid.Column="0" IsReadOnly="True" Text="{TemplateBinding Text}"></TextBox>
+                            <Border  Grid.Column="0" BorderThickness="1,1,0,1" BorderBrush="#6D6D6D" CornerRadius="1,0,0,1">
+                            </Border>
+                            <Border Grid.Column="1" BorderThickness="0,1,1,1" BorderBrush="#6D6D6D" CornerRadius="0,1,1,0">
+                                <ToggleButton Style="{StaticResource stlToggleButton}" IsChecked="{Binding Path=IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" ClickMode="Press"></ToggleButton>
+                            </Border>
+                            <Popup IsOpen="{TemplateBinding IsDropDownOpen}" Placement="Bottom" x:Name="Popup" Focusable="False" AllowsTransparency="True" PopupAnimation="Slide">
+                                <Border CornerRadius="1" MaxHeight="{TemplateBinding MaxDropDownHeight}" MinWidth="{TemplateBinding ActualWidth}" x:Name="DropDown" SnapsToDevicePixels="True">
+                                    <Border.Effect>
+                                        <DropShadowEffect Color="Black" BlurRadius="2" ShadowDepth="0" Opacity="0.5"/>
+                                    </Border.Effect>
+                                    <ScrollViewer Margin="4,6,4,6" Style="{DynamicResource ScrollViewerStyle}" MaxHeight="{TemplateBinding MaxDropDownHeight}" SnapsToDevicePixels="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" CanContentScroll="True">
+                                        <!-- StackPanel 用于显示子级，方法是将 IsItemsHost 设置为 True -->
+                                        <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained" Background="White"/>
+                                    </ScrollViewer>
+                                </Border>
+                            </Popup>
+                        </Grid>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
