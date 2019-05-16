@@ -170,9 +170,8 @@ namespace SLWizard.ViewModels
                     SelectedItem = item;
                     
                     SaveData();
-                    RaisePropertyChanged("");
                     EventAggregatorHost.Aggregator.SendMessage<SysMessage>(new SysMessage($"对文件{SelectedProject.ProjectName}的保存已完成！"));
-                    string soundPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Sound", "Windows Foreground.wav");
+                    string soundPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Sound", "Windows_Foreground.wav");
                     SoundTool.Play(soundPath);
                 }));
             }
@@ -190,7 +189,7 @@ namespace SLWizard.ViewModels
                     {
                         File.Copy(SelectedItem.AbsolutePath, SelectedProject.FilePath, true);
                         EventAggregatorHost.Aggregator.SendMessage<SysMessage>(new SysMessage($"文件{SelectedProject.ProjectName}已重新载入！"));
-                        string soundPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Sound", "Windows Notify System Generic.wav");
+                        string soundPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Sound", "Windows_Notify_System_Generic.wav");
                         SoundTool.Play(soundPath);
                     }
                 });
@@ -303,6 +302,25 @@ namespace SLWizard.ViewModels
             }
 
         }
+
+
+        private RelayCommand<ArchiveItem> dataGridSelectionChangedCommand;
+
+        public RelayCommand<ArchiveItem> DataGridSelectionChangedCommand
+        {
+            get
+            {
+                return dataGridSelectionChangedCommand ?? new RelayCommand<ArchiveItem>((p)=>
+                {
+                    if (SelectedItem != null)
+                    {
+                        SelectedItem.IsSelected = true;
+                    }
+                });
+            }
+        }
+
+
 
         private void SaveData()
         {

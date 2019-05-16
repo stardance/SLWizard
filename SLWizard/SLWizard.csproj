@@ -139,12 +139,13 @@
     <Resource Include="Save.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\Sound\Windows Foreground.wav">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Sound\Windows Notify System Generic.wav">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="Resources\Sound\Windows Foreground.wav" />
+    <Content Include="Resources\Sound\Windows Notify System Generic.wav" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>md $(TargetDir)\Sound
+copy $(ProjectDir)\Resources\Sound\Windows_Foreground.wav  $(TargetDir)\Sound\
+copy $(ProjectDir)\Resources\Sound\Windows_Notify_System_Generic.wav  $(TargetDir)\Sound\</PostBuildEvent>
+  </PropertyGroup>
 </Project>

@@ -11,7 +11,7 @@
         mc:Ignorable="d"
         Title="SLWizard" 
         Height="500" 
-        Width="730"
+        Width="738"
         WindowStartupLocation="CenterScreen"
         Closed="Window_Closed">
     <Window.Resources>
@@ -117,7 +117,26 @@
                       IsSynchronizedWithCurrentItem="False"
                       CanUserAddRows="False"
                       ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                      SelectedItem="{Binding SelectedItem}">
+                      SelectedItem="{Binding SelectedItem}"
+                      Name="dataGridItems">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <mvvm:EventToCommand Command="{Binding DataContext.DataGridSelectionChangedCommand,RelativeSource={RelativeSource AncestorType=DataGrid,Mode=FindAncestor}}" CommandParameter="{Binding ElementName=dataGridItems,Path=SelectedItem}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <DataGrid.RowStyle >
+                    <Style TargetType="DataGridRow">
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FF5C8960"/>
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="#FF72B530"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.RowStyle>
                 <DataGrid.Columns>
                     <DataGridTemplateColumn>
                         <DataGridTemplateColumn.CellTemplate>
@@ -146,7 +165,7 @@
                     <DataGridTextColumn Binding="{Binding Note}"
                                         Header="备注"
                                         Width="200"
-                                        Foreground="#FF24BE24"/>
+                                        Foreground="#FFD72E20"/>
                     <DataGridTemplateColumn Header="操作"
                                             Width="60">
                         <DataGridTemplateColumn.CellTemplate>

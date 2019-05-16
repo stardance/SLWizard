@@ -36,6 +36,19 @@ Converter="{StaticResource bgCvt}"/>
             </Setter>
         </Style>
 
+        <!--<Style TargetType="DataGridRow">
+            <Setter Property="Background" Value="White"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="LightGray"/>
+                </Trigger>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="LightGray"/>
+                    <Setter Property="Foreground" Value="#FFB2B23D"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>-->
+
         <Style TargetType="DataGridColumnHeader">
             <Setter Property="SnapsToDevicePixels" Value="True" />
             <Setter Property="MinWidth" Value="0" />

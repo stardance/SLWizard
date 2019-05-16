@@ -55,7 +55,14 @@ namespace SL.Utils
             //必须设定0（系统默认的代码页）的编码方式，否则无法支持中文
             string s = Encoding.GetEncoding(0).GetString(Buffer);
             s = s.Substring(0, bufLen);
-            return s.Trim();
+            if (string.IsNullOrEmpty(s.Trim()))
+            {
+                return Default;
+            }
+            else
+            {
+                return s.Trim();
+            }
         }
     }
 }

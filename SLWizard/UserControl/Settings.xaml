@@ -30,58 +30,91 @@
                 <TabItem Header="基本设置">
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="30" />
-                            <RowDefinition Height="30" />
-                            <RowDefinition Height="30" />
-                            <RowDefinition Height="30" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="10" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
                             <RowDefinition Height="*" />
                             <RowDefinition Height="30" />
                         </Grid.RowDefinitions>
-                        <StackPanel Grid.Row="0"
+                        <GroupBox Grid.Row="0"
+                                  Header="键位"
+                                  Foreground="White">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <StackPanel Grid.Row="0"
                                     Orientation="Horizontal"
                                     VerticalAlignment="Center">
-                            <TextBlock Text="备份:"/>
-                            <ComboBox Width="80"
+                                    <TextBlock Text="备份:"/>
+                                    <ComboBox Width="80"
                                       ItemsSource="{Binding ModifierKeys}"
                                       DisplayMemberPath="Key"
                                       SelectedValuePath="Value"
                                       SelectedItem="{Binding BackupMKey}"
                                       Style="{StaticResource stlComboBox}"/>
-                            <TextBlock Text="+"/>
-                            <ComboBox Width="80"
+                                    <TextBlock Text="+"/>
+                                    <ComboBox Width="80"
                                       ItemsSource="{Binding DicKeys}"
                                       DisplayMemberPath="Key"
                                       SelectedValuePath="Value"
                                       SelectedItem="{Binding BackupKey}"
                                       Style="{StaticResource stlComboBox}"/>
-                        </StackPanel>
-                        <StackPanel Grid.Row="1"
+                                </StackPanel>
+                                <StackPanel Grid.Row="1"
                                     Orientation="Horizontal"
                                     VerticalAlignment="Center">
-                            <TextBlock Text="载入:"/>
-                            <ComboBox Width="80"
+                                    <TextBlock Text="载入:"/>
+                                    <ComboBox Width="80"
                                       ItemsSource="{Binding ModifierKeys}"
                                       DisplayMemberPath="Key"
                                       SelectedValuePath="Value"
                                       SelectedItem="{Binding RestoreMKey,UpdateSourceTrigger=PropertyChanged}"
                                       Style="{StaticResource stlComboBox}"/>
-                            <TextBlock Text="+"/>
-                            <ComboBox Width="80"
+                                    <TextBlock Text="+"/>
+                                    <ComboBox Width="80"
                                       ItemsSource="{Binding DicKeys}"
                                       DisplayMemberPath="Key"
                                       SelectedValuePath="Value"
                                       SelectedItem="{Binding RestoreKey,UpdateSourceTrigger=PropertyChanged}"
                                       Style="{StaticResource stlComboBox}"/>
-                        </StackPanel>
-                        <StackPanel Grid.Row="2"
+                                </StackPanel>
+                            </Grid>
+                           
+                        </GroupBox>
+
+                        <GroupBox Grid.Row="2"
+                                  Header="杂项"
+                                  Foreground="White">
+                            <Grid >
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="4" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <StackPanel Grid.Row="0"
                                     Orientation="Horizontal"
                                     VerticalAlignment="Center">
-                            <CheckBox VerticalAlignment="Center"
+                                    <CheckBox VerticalAlignment="Center"
                                       IsChecked="{Binding AutoCheckNewItem,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-                            <TextBlock Text="自动勾选新增项作为首选项"
+                                    <TextBlock Text="自动勾选新增项作为首选项"
                                        Margin="4 0 0 0"/>
-                        </StackPanel>
-                        <StackPanel Grid.Row="5"
+                                    
+                                </StackPanel>
+                                <StackPanel Grid.Row="2"
+                                            Orientation="Horizontal">
+                                    <TextBlock Text="语言:"
+                                       />
+                                    <ComboBox Width="100"
+                                      Style="{StaticResource stlComboBox}"/>
+                                </StackPanel>
+                            </Grid>
+                        </GroupBox>
+                       
+                        <StackPanel Grid.Row="6"
                                     HorizontalAlignment="Right"
                                     VerticalAlignment="Center">
                             <res:CubeButton Content="确定"
@@ -102,12 +135,12 @@
                             BorderThickness="1"
                             BorderBrush="Violet">
                         <StackPanel VerticalAlignment="Top"
-                                HorizontalAlignment="Center"
+                                HorizontalAlignment="Left"
                                 Orientation="Vertical">
                             <TextBlock Text="SLWizard"
                                    FontSize="24"/>
                             <TextBlock 
-                                   Text="版本：0.1"/>
+                                   Text="版本：1.0"/>
                             <TextBlock 
                                    Text="By Stardance"/>
                             <TextBlock >
