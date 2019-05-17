@@ -8,8 +8,9 @@
         xmlns:res="clr-namespace:SLWizard.Resources"
         xmlns:mvvm="http://www.galasoft.ch/mvvmlight"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:prop="clr-namespace:SLWizard.Properties"
         mc:Ignorable="d"
-        Title="SLWizard" 
+        Title="{x:Static prop:Resources.mainTitle}" 
         Height="500" 
         Width="738"
         WindowStartupLocation="CenterScreen"
@@ -36,7 +37,7 @@
         
         <Grid Grid.Row="1"
               Grid.Column="0">
-            <res:CubeButton Content="新建项目"
+            <res:CubeButton Content="{x:Static prop:Resources.newProject}"
                     Command="{Binding AddNewProjectCommand}"
                     Margin="2"
                     Style="{StaticResource CubeButton}"
@@ -153,20 +154,20 @@
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn >
                     <DataGridTextColumn Binding="{Binding Serial,Converter={StaticResource SerCVT}}"
-                                        Header="序号"
+                                        Header="{x:Static prop:Resources.dataGridColumnSerial}"
                                         Width="60"
                                         Foreground="White"
                                         IsReadOnly="True"/>
                     <DataGridTextColumn Binding="{Binding CreateTime,StringFormat={}{0:yyyy-MM-dd HH:mm}}"
-                                        Header="创建日期"
+                                        Header="{x:Static prop:Resources.dataGridColumnCreateTime}"
                                         Width="140"
                                         Foreground="White"
                                         IsReadOnly="True"/>
                     <DataGridTextColumn Binding="{Binding Note}"
-                                        Header="备注"
+                                        Header="{x:Static prop:Resources.dataGridColumnNote}"
                                         Width="200"
                                         Foreground="#FFD72E20"/>
-                    <DataGridTemplateColumn Header="操作"
+                    <DataGridTemplateColumn Header="{x:Static prop:Resources.dataGridColumnOperation}"
                                             Width="60">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -218,21 +219,21 @@
                     Grid.Column="1"
                     Orientation="Horizontal"
                     HorizontalAlignment="Right">
-            <res:CubeButton Content="设置"
+            <res:CubeButton Content="{x:Static prop:Resources.settings}"
                     Margin="5 "
                     Width="100"
                     Style="{StaticResource CubeButton}"
                     Command="{Binding SettingCommand}"
                     PathFigure="M24.574808,0C25.477812,0,26.379816,0.20100307,27.282821,0.50100708L27.984824,0.80201149 23.471802,5.1150765C23.170801,5.416081,23.0708,5.8170867,23.371802,6.2180929L25.878814,8.7251303C26.078815,8.9261334 26.279816,9.026135 26.479816,9.0261347 26.580817,8.9261334 26.680818,8.9261334 26.780818,8.8261321L30.993838,4.6130691 31.494841,4.7140703C32.497846,7.3211093 31.995843,10.230153 30.090834,12.135181 28.485826,13.740206 26.179815,14.542217 23.872804,14.04121 23.671803,14.241213 14.144758,23.769356 13.943757,23.969358 14.445759,26.276393 13.642756,28.583427 12.038748,30.187452 10.132739,32.093481 7.8267279,32.394485 5.2187157,31.39147L4.8177137,31.190466C4.7177134,31.190466,4.6167126,31.090466,4.5167122,31.090466L8.6287317,27.078405C9.0297337,26.677399,9.0297337,25.975389,8.6287317,25.574383L6.3217211,23.067345C6.0207195,22.966344,5.6197176,23.267348,5.318716,23.568353L1.2066956,27.780416 0.50469208,27.479411C-0.49731255,24.872372 0.0036907196,21.963328 1.9097004,20.0583 3.5137072,18.453276 5.8207178,17.852267 8.126729,18.253273 8.2277298,18.152272 17.955776,8.3241243 18.155777,8.1231215 17.654775,5.8170867 18.256778,3.5100527 19.860785,1.9050283 21.164791,0.70201015 22.769799,0 24.574808,0z">
             </res:CubeButton>
-            <res:CubeButton Content="备份"
+            <res:CubeButton Content="{x:Static prop:Resources.backup}"
                     Margin="5"
                     Width="100"
                     Style="{StaticResource CubeButton}"
                     Command="{Binding SaveCommand}"
                     PathFigure="M11.999988,24.000056L11.999988,30.000041 20.999989,30.000041 20.999989,24.000056z M15.999989,7.0000553L15.999989,11.000056 20.999989,11.000056 20.999989,7.0000553z M6.9999914,7.0000409L6.9999914,30.000041 9.9999881,30.000041 9.9999881,23.000056C9.9999881,22.447055,10.447988,22.000056,10.999988,22.000056L21.999988,22.000056C22.552989,22.000056,22.999988,22.447055,22.999988,23.000056L22.999988,30.000041 25.999991,30.000041 25.999991,11.413981 22.999988,8.4288988 22.999988,12.000056C22.999988,12.552056,22.552989,13.000055,21.999988,13.000055L14.999989,13.000055C14.447989,13.000055,13.999989,12.552056,13.999989,12.000056L13.999989,7.0000409z M5.9999912,5.0000412L21.977988,5.0000412 21.999988,5.0000555C22.311051,5.0000557,22.588574,5.1414893,22.771867,5.3636655L22.818044,5.4254475 27.705009,10.288981C27.894004,10.47697,27.999991,10.731975,27.999991,10.997966L27.999991,31.000041C27.999991,31.55302,27.553,32.000041,26.999991,32.000041L22.000291,32.000041 10.999988,32.000056 5.9999912,32.000041C5.4470129,32.000041,4.9999914,31.55302,4.9999913,31.000041L4.9999913,6.0000411C4.9999914,5.4469404,5.4470129,5.000041,5.9999912,5.0000412z M1,0L16,0 16,1.9999998 2,1.9999998 2,24.999999 0,24.999999 0,1C0,0.44700003,0.44700003,0,1,0z">
             </res:CubeButton>
-            <res:CubeButton Content="载入"
+            <res:CubeButton Content="{x:Static prop:Resources.restore}"
                     Margin="5"
                     Width="100"
                     Style="{StaticResource CubeButton}"

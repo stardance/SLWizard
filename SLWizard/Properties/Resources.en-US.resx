@@ -118,63 +118,63 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="about" xml:space="preserve">
-    <value>关于</value>
+    <value>About</value>
   </data>
   <data name="autoSelectdNewItem" xml:space="preserve">
-    <value>将新建项设为活动项</value>
+    <value>Select New Create Item As Active Item</value>
   </data>
   <data name="backup" xml:space="preserve">
-    <value>备份</value>
+    <value>Backup</value>
   </data>
   <data name="basicSettings" xml:space="preserve">
-    <value>基本设定</value>
+    <value>Basic Settings</value>
   </data>
   <data name="browse" xml:space="preserve">
-    <value>浏览</value>
+    <value>Browse</value>
   </data>
   <data name="confirm" xml:space="preserve">
-    <value>确认</value>
+    <value>Confirm</value>
   </data>
   <data name="dataGridColumnCreateTime" xml:space="preserve">
-    <value>创建时间</value>
+    <value>CreateTime</value>
   </data>
   <data name="dataGridColumnNote" xml:space="preserve">
-    <value>备注</value>
+    <value>Note</value>
   </data>
   <data name="dataGridColumnOperation" xml:space="preserve">
-    <value>操作</value>
+    <value>Operation</value>
   </data>
   <data name="dataGridColumnSerial" xml:space="preserve">
-    <value>序号</value>
+    <value>ID</value>
   </data>
   <data name="keyBoard" xml:space="preserve">
-    <value>键位</value>
+    <value>KeyBoard</value>
   </data>
   <data name="language" xml:space="preserve">
-    <value>语言</value>
+    <value>Language</value>
   </data>
   <data name="mainTitle" xml:space="preserve">
-    <value>SL小助手</value>
+    <value>SLWizard</value>
   </data>
   <data name="misc" xml:space="preserve">
-    <value>杂项</value>
+    <value>Misc</value>
   </data>
   <data name="newProject" xml:space="preserve">
-    <value>新建项目</value>
+    <value>New Project</value>
   </data>
   <data name="newProjectGuide" xml:space="preserve">
-    <value>新建项目向导</value>
+    <value>New Project Guide</value>
   </data>
   <data name="projectPath" xml:space="preserve">
-    <value>项目路径</value>
+    <value>ProjectPath</value>
   </data>
   <data name="projectTitle" xml:space="preserve">
-    <value>项目标题</value>
+    <value>ProjectTitle</value>
   </data>
   <data name="restore" xml:space="preserve">
-    <value>还原</value>
+    <value>Restore</value>
   </data>
   <data name="settings" xml:space="preserve">
-    <value>设置</value>
+    <value>Settings</value>
   </data>
 </root>

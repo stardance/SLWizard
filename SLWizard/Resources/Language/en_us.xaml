@@ -1,0 +1,22 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:SLWizard.Resources.Language"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+    <system:String x:Key="MainTitle">SLWizard</system:String>
+    <system:String x:Key="NewProject">New Project</system:String>
+    <system:String x:Key="Settings">Settings</system:String>
+    <system:String x:Key="backup">Backup</system:String>
+    <system:String x:Key="Restore">Restore</system:String>
+    <system:String x:Key="DataGridColumnSerial">ID</system:String>
+    <system:String x:Key="DataGridColumnCreateTime">CreateTime</system:String>
+    <system:String x:Key="DataGridColumnNote">Note</system:String>
+    <system:String x:Key="DataGridColumnOperation">Operation</system:String>
+    <system:String x:Key="NewProjectGuide">New Project Guide</system:String>
+    <system:String x:Key="Confirm">Confirm</system:String>
+    <system:String x:Key="browse">Browse</system:String>
+    <system:String x:Key="basicSettings">Basic Settings</system:String>
+    <system:String x:Key="KeyBoard">KeyBoard</system:String>
+    <system:String x:Key="misc">Misc</system:String>
+    <system:String x:Key="autoSelectdNewItem">Select New Create Item As Active Item</system:String>
+    <system:String x:Key="Language">Language</system:String>
+</ResourceDictionary>

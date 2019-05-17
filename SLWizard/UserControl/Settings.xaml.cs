@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -200,6 +201,28 @@ namespace SLWizard.UserControl
             }
         }
 
+
+        private RelayCommand<ComboBoxItem> languageChangedCommand;
+
+        public RelayCommand<ComboBoxItem> LanguageChangedCommand
+        {
+            get
+            {
+                return languageChangedCommand ?? new RelayCommand<ComboBoxItem>((p)=>
+                {
+                    var name = p.Content;
+                    switch (name)
+                    {
+                        case "中文":
+                            inireader.WriteString("Misc", "Language", "zh-CN");
+                            break;
+                        case "English":
+                            inireader.WriteString("Misc", "Language", "en-US");
+                            break;
+                    }
+                });
+            }
+        }
 
 
     }

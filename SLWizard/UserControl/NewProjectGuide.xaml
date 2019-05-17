@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SLWizard.UserControl"
         xmlns:res="clr-namespace:SLWizard.Resources"
+        xmlns:prop="clr-namespace:SLWizard.Properties"
         mc:Ignorable="d"
-        Title="新建项目向导" 
+        Title="{x:Static prop:Resources.newProjectGuide}" 
         Height="180" 
         Width="600"
         WindowStartupLocation="CenterScreen">
@@ -28,7 +29,7 @@
 
             <StackPanel Grid.Row="0"
                     Orientation="Horizontal">
-                <Label Content="标       题:"
+                <Label Content="{x:Static prop:Resources.projectTitle}"
                    />
                 <TextBox Width="500"
                      Height="28"
@@ -40,7 +41,7 @@
 
             <StackPanel Grid.Row="1"
                     Orientation="Horizontal">
-                <Label Content="文件位置:"
+                <Label Content="{x:Static prop:Resources.projectPath}"
                    />
                 <TextBox Width="420"
                      Height="28"
@@ -51,7 +52,7 @@
                 <res:CubeButton Width="76"
                     Height="28"
                     Margin="2"
-                    Content="浏览"
+                    Content="{x:Static prop:Resources.browse}"
                     FontSize="16"
                     x:Name="SelectFileDialog"
                     Click="SelectFileDialog_Click"
@@ -67,7 +68,7 @@
                 <res:CubeButton Width="76"
                     Height="28"
                     Margin="0 0 14 0"
-                    Content="确定"
+                    Content="{x:Static prop:Resources.confirm}"
                     x:Name="Confirm"
                     FontSize="16"
                     Click="Confirm_Click"
