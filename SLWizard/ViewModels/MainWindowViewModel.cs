@@ -292,9 +292,13 @@ namespace SLWizard.ViewModels
                     {
                         if (MessageBox.Show("确定删除此项目?", "警告", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
                         {
-                            Directory.Delete(SelectedProject.FilePath,true);
-                            EventAggregatorHost.Aggregator.SendMessage<SysMessage>(new SysMessage($"项目{SelectedProject.ProjectName}已删除。"));
-                            Entity.ObList.Remove(SelectedProject);
+                            string archiveDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"Archive", SelectedProject.ProjectName);
+                            if(Directory.Exists(archiveDirectory))
+                            {
+                                Directory.Delete(archiveDirectory, true);
+                                EventAggregatorHost.Aggregator.SendMessage<SysMessage>(new SysMessage($"项目{SelectedProject.ProjectName}已删除。"));
+                                Entity.ObList.Remove(SelectedProject);
+                            }
                         }
                     });
                 }
